@@ -1,0 +1,15 @@
+<style>
+    .blog-header {
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://storage.googleapis.com/a1aa/image/4kYDbe9_mPPrjHxPXwWNPCbcuTGXh7tz2L58yK4ahOE.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 300px;
+    }
+    .review-card {
+      transition: all 0.3s ease;
+    }
+    .review-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+  </style>
