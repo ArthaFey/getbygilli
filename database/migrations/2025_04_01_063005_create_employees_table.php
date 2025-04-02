@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('Nama');
             $table->string('Ulasan');
             $table->integer('Rating');
-            $table->enum('Foto');
+            $table->string('Foto');
             $table->timestamps();
         });
     }
