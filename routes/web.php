@@ -13,7 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+ 
+
+// ## BERITA ## //
+
+// ## TESTIMONI ## //
 Route::get('/', function () {
     return view('backend.testimoni.index');
 });
- 
+
+
+// ## CATEGORY ## //
