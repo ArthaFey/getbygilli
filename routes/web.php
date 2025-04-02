@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TiketController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BeritaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,10 +21,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/',[HomeController::class,'home'])->name('home');
 
 
+
 // ## BERITA ## //
-
-
-
+Route::get('/news',[BeritaController::class, 'news'])->name('news');
+Route::get('/tambahberita',[BeritaController::class, 'tambahberita'])->name('tambahberita');
 
 // ## TESTIMONI ## //
 
