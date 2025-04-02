@@ -2,8 +2,7 @@
 <html lang="en">
   <!--begin::Head-->
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />php artisan config:clear
-    php artisan cache:clear
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
     <title>AdminLTE v4 | Dashboard</title>
     <!--begin::Primary Meta Tags-->
@@ -308,13 +307,13 @@
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="./index.html" class="nav-link">
+                    <a href="{{ route('category') }}" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
                       <p>Category</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="./index.html" class="nav-link">
+                    <a href="{{ route('tiket') }}" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
                       <p>Tiket</p>
                     </a>
@@ -613,6 +612,91 @@
       sparkline3.render();
     </script>
     <!--end::Script-->
+
+
+
+    <script>
+      function comfirmDelete(deleteUrl) {
+          Swal.fire({
+          title: 'Apakah Anda yakin?',
+          text: "Data yang dihapus tidak dapat dikembalikan!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#dc3545',
+          cancelButtonColor: '#0da6e2',
+          confirmButtonText: 'Ya, hapus!',
+          cancelButtonText: 'Batal'
+  }).then((result) => {
+  if (result.isConfirmed) {
+    window.location.href = deleteUrl;
+  }
+  })
+  }
+  </script>
+
+
+@if(session('insert'))
+  <script>
+  const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+      }
+  });
+  Toast.fire({
+      icon: "success",
+      title: "Add Data Success" // Mengambil pesan dari session
+  });
+  </script>
+  @endif
+
+  
+@if(session('update'))
+<script>
+const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+    }
+});
+Toast.fire({
+    icon: "success",
+    title: "Update Data Success" // Mengambil pesan dari session
+});
+</script>
+@endif
+
+@if(session('delete'))
+<script>
+const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+    }
+});
+Toast.fire({
+    icon: "success",
+    title: "Delete Data Success" // Mengambil pesan dari session
+});
+</script>
+@endif
+
+
   </body>
   <!--end::Body-->
 </html>
