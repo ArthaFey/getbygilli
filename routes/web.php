@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
  
 
 // ## BERITA ## //
+Route::get('/', function () {
+    return view('backend.berita.databerita');
+});
 
 // ## TESTIMONI ## //
 Route::get('/', function () {
