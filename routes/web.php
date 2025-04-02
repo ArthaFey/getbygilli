@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,17 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
- 
+// ## HOME ## //
+Route::get('/',[HomeController::class,'home'])->name('home');
 
 // ## BERITA ## //
-Route::get('/', function () {
-    return view('backend.berita.databerita');
-});
+
 
 // ## TESTIMONI ## //
-Route::get('/', function () {
-    return view('backend.testimoni.index');
-});
+
 
 
 // ## CATEGORY ## //
