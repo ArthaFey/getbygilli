@@ -320,7 +320,7 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="./index.html" class="nav-link">
+                    <a href="./news" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
                       <p>Berita</p>
                     </a>

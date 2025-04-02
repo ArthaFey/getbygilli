@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BeritaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,8 +17,12 @@ use Illuminate\Support\Facades\Route;
 
 // ## HOME ## //
 Route::get('/',[HomeController::class,'home'])->name('home');
-// ## BERITA ## //
 
+
+
+// ## BERITA ## //
+Route::get('/news',[BeritaController::class, 'news'])->name('news');
+Route::get('/tambahberita',[BeritaController::class, 'tambahberita'])->name('tambahberita');
 
 // ## TESTIMONI ## //
 
