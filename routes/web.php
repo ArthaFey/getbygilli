@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TiketController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BeritaController;
 
@@ -29,3 +31,16 @@ Route::get('/tambahdata',[BeritaController::class, 'tambahdata'])->name('tambahd
 
 
 // ## CATEGORY ## //
+Route::get('/category/checkSlug',[CategoryController::class,'checkSlug']);
+Route::get('/category',[CategoryController::class,'category'])->name('category');
+Route::get('/category-tambah',[CategoryController::class,'tambah'])->name('category.tambah');
+Route::post('/category-insert',[CategoryController::class,'insert'])->name('category.insert');
+Route::get('/category-edit/{id}',[CategoryController::class,'edit'])->name('category.edit');
+Route::post('/category-update/{id}',[CategoryController::class,'update'])->name('category.update');
+Route::get('/category-delete/{id}',[CategoryController::class,'delete'])->name('category.delete');
+
+
+
+
+// ## TIKET ## //
+Route::get('/tiket',[TiketController::class,'tiket'])->name('tiket');
