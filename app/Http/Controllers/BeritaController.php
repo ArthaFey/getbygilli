@@ -11,7 +11,7 @@ class BeritaController extends Controller
         return view('backend.berita.databerita');
     }
 
-    public function tambahberita(){
+    public function tambahdata(){
 
         return view('backend.berita.uploaddata');
     }

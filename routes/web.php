@@ -22,7 +22,7 @@ Route::get('/',[HomeController::class,'home'])->name('home');
 
 // ## BERITA ## //
 Route::get('/news',[BeritaController::class, 'news'])->name('news');
-Route::get('/tambahberita',[BeritaController::class, 'tambahberita'])->name('tambahberita');
+Route::get('/tambahdata',[BeritaController::class, 'tambahdata'])->name('tambahdata');
 
 // ## TESTIMONI ## //
 
