@@ -61,7 +61,7 @@
     <div class="form-card">
         <h4 class="form-title">Add Berita</h4>
         
-        <form action="{{ route('tambahberita') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('tambahdata') }}" method="post" enctype="multipart/form-data">
             @csrf
 
             <!-- Custom File Upload -->
