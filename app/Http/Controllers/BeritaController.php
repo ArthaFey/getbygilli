@@ -16,6 +16,9 @@ class BeritaController extends Controller
 
         return view('backend.berita.uploaddata');
     }
-    
+    public function insertdata(Request $request){
+        dd($request->all());
+        Berita::create($request->all());
+    }
     
 }

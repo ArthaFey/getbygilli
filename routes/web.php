@@ -26,7 +26,7 @@ Route::get('/',[HomeController::class,'home'])->name('home');
 // ## BERITA ## //
 Route::get('/news',[BeritaController::class, 'news'])->name('news');
 Route::get('/tambahdata',[BeritaController::class, 'tambahdata'])->name('tambahdata');
-
+Route::post('/insertdata',[BeritaController::class, 'insertdata'])->name('insertdata');
 // ## TESTIMONI ## //
 
 
