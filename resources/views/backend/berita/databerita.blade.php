@@ -21,17 +21,19 @@
                   </tr>
                 </thead>
                 <tbody>
+                  @foreach ($data as $row)
                   <tr>
-                    <th scope="row">1</th>
-                    <td>Bali</td>
-                    <td>2025-04-4</td>
-                    <td>Pemandangan Bagus Di Pantai Kuta Bali</td>
-                    <td>654</td>
+                    <th scope="row">{{ $row->id }}</th>
+                    <td>{{ $row->category }}</td>
+                    <td>{{ $row->date }}</td>
+                    <td>{{ $row->title }}</td>
+                    <td>{{ $row->hit }}</td>
                     <td>
                       <button type="button" class="btn btn-info">Edit</button>
                       <button type="button" class="btn btn-danger">Delete</button>
                     </td>
                   </tr>
+                  @endforeach
                 </tbody>
               </table>
         

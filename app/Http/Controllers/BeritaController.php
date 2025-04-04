@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Berita;
 use Illuminate\Http\Request;
 
 class BeritaController extends Controller
 {
     public function news(){
-
-        return view('backend.berita.databerita');
+        $data = Berita::all();
+        return view('backend.berita.databerita', compact('data'));
     }
 
     public function tambahdata(){
