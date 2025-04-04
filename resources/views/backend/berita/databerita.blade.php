@@ -1,75 +1,53 @@
 @extends('backend.template-admin.index')
 @section('content')
-    
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-12 justify-content-between d-flex">
-                <h1 class="m-0">{{ __('news') }}</h1>
-                <a href="{{ route('news') }}" class="btn btn-primary btn-sm"> <i class="fa fa-plus"></i> </a>
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
 
-<!-- Main content -->
-<div class="content">
-    <div class="container-fluid">
+<title>Data Berita</title>
+  </head>
+  <body>
+    <h1 class="text-center mb-4">Data Berita</h1>
+
+    <div class="container">
+      <button type="button" class="btn btn-success">Tambah +</button>
         <div class="row">
-            <div class="col-lg-12">
-
-                <div class="card">
-                    <div class="card-body p-0">
-
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Title</th>
-                                    <th>Image</th>
-                                    <th>Excerpt</th>
-                                    <th>Category</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($blogs as $blog)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $blog->title }}</td>
-                                    <td>
-                                        <a href="{{ Storage::url($blog->image) }}" target="_blank">
-                                            <img src="{{ Storage::url($blog->image) }}" width="100" alt="">
-                                        </a>
-                                    </td>
-                                    <td>{{ $blog->excerpt }}</td>
-                                    <td>{{ $blog->category->name }}</td>
-                                    <td>
-                                        <a href="{{ route('backend.berita.edit', [$blog]) }}" class="btn btn-sm btn-info"> <i class="fa fa-edit"></i> </a>              
-                                        <form onclick="return confirm('are you sure ?');" class="d-inline-block" action="{{ route('admin.blogs.destroy', [$blog]) }}" method="post">
-                                            @csrf 
-                                            @method('delete')
-                                            <button class="btn btn-sm btn-danger"> <i class="fa fa-trash"></i> </button>
-                                        </form>                              
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.card-body -->
-
-                    <div class="card-footer clearfix">
-                        {{ $blogs->links() }}
-                    </div>
-                </div>
-
-            </div>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Kategori</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Hit</th>
+                    <th scope="col">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Bali</td>
+                    <td>2025-04-4</td>
+                    <td>Pemandangan Bagus Di Pantai Kuta Bali</td>
+                    <td>654</td>
+                    <td>
+                      <button type="button" class="btn btn-info">Edit</button>
+                      <button type="button" class="btn btn-danger">Delete</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+        
         </div>
-        <!-- /.row -->
-    </div><!-- /.container-fluid -->
-</div>
-<!-- /.content -->
+    </div>
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
 
 @endsection
