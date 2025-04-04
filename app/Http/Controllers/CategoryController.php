@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -43,7 +44,24 @@ class CategoryController extends Controller
     public function update(Request $request,$id){
         $category = Category::findOrFail($id);
         $data = $request->all();
+
+        if ($request->hasFile('foto')) {
+            // Hapus file lama jika ada
+            if ($category->foto) {
+                $oldFilePath = public_path('foto/' . $category->foto);
+                if (file_exists($oldFilePath)) {
+                    unlink($oldFilePath); // Menghapus file lama
+                }
+            }
+    
+            // Upload file baru
+            $file = $request->file('foto');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move('foto/', $filename); // Memindahkan file ke folder yang benar
+            $data['foto'] = $filename; // Menyimpan nama file baru ke dalam data
+        }
         $category->update($data);
+
         return redirect()->route('category')->with('update','Update Data Success');
     }
 
@@ -53,8 +71,18 @@ class CategoryController extends Controller
         return redirect()->route('category')->with('delete','Delete Data Success');
     }
 
-    public function checkSlug(Request $request){
-        $slug = SlugService::createSlug(Category::class, 'slug', $request->category);
-        return response()->json(['slug' => $slug]);
-      }
+    public function checkSlug(Request $request)
+    {
+        $judulTiket = $request->input('name');  // Ambil nilai dari query parameter 'judul_tiket'
+        $slug = Str::slug($judulTiket);  // Membuat slug dari judul tiket
+    
+        // Periksa jika slug sudah ada di database
+        $originalSlug = $slug;
+        $counter = 1;
+        while (Category::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter;  // Tambahkan angka pada slug jika sudah ada
+            $counter++;  // Mengubah category menjadi slug
+        }
+        return response()->json(['slug' => $slug]);  // Kembalikan slug dalam format JSON
+    }
 }

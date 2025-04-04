@@ -55,42 +55,44 @@
 </style>
 
 
+
 <div class="content">
     <div class="container-fluid">
-        <h1>Edit Data</h1>
+        <h1>Tambah Data</h1>
         <div class="row">
             <div class="col-lg-12">
                 <div class="card p-3">
-                    <form method="post" action="{{ route('category.update',$category->id) }}" enctype="multipart/form-data">
+                    <form method="post" action="{{ route('tiket.insert',$perusahaan->id) }}" enctype="multipart/form-data">
                         @csrf 
                         
-                        <div class="mb-3">
-                            <label for="image" class="form-label">Foto</label>
-                            <input type="file" id="image" name="foto" class="form-control @error('foto') is-invalid @enderror">
-                            <div class="image-preview" id="thumbnailInput">
-                                
-                                @if($category->foto)
-                                <img src="{{ asset('foto/' . $category->foto) }}" alt="Old Image Preview" id="previewImage" style="display: block;">
-                                @else
-                                <img src="#" alt="Image Preview" id="previewImage" style="display: none;">
-                                <span class="preview-text" id="previewText">No image selected</span>
-                                @endif
-
-                            </div>
-                            @error('foto')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
+                        <input type="hidden" name="perusahaan_id" value="{{ $perusahaan->id }}" id="">
 
                         <div class="mb-3">
-                            <label for="title" class="col-sm-2 col-form-label">Category</label>
-                            <input type="text" class="form-control" name="name" value="{{ old('name',$category->name) }}" id="category">
+                            <label for="title" class="col-sm-2 col-form-label">Judul Tiket</label>
+                            <input type="text" class="form-control" name="judul_tiket" value="{{ old('judul_tiket') }}" id="judul_tiket">
                             
-                            <input type="hidden" name="slug" id="slug" value="{{ old('slug',$category->slug) }}">
+                            <input type="hidden" name="slug" id="slug">
                         </div>
                       
+                        <div class="mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">Harga Dewasa</label>
+                            <input type="number" class="form-control" name="harga_dewasa" value="{{ old('harga_dewasa') }}" id="">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">Harga Anak-Anak</label>
+                            <input type="number" class="form-control" name="harga_anak_anak" value="{{ old('harga_anak_anak') }}" id="">
+                        </div>
+                      
+                        <div class="mb-3">
+                        <label for="title" class="col-sm-2 col-form-label">Category</label>      
+                        <select class="form-select" name="category_id" aria-label="Default select example">
+                            <option selected>Pilih Category</option>
+                            @foreach ($category as $item )
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                          </select>
+                        </div>
                     
                         <button type="submit" class="btn btn-success">Save</button>
                     </form>
@@ -103,14 +105,20 @@
 
 
 <script>
-    const category = document.querySelector('#category');
+    const judul_tiket = document.querySelector('#judul_tiket');
     const slug = document.querySelector('#slug');
 
-    category.addEventListener('change', function() {
-        fetch('/category/checkSlug?category=' + category.value)
-            .then(response => response.json())
-            .then(data => slug.value = data.slug);
+    judul_tiket.addEventListener('input', function() {
+    fetch('/tiket/checkSlug?judul_tiket=' + encodeURIComponent(judul_tiket.value))
+        .then(response => response.json())
+        .then(data => {
+            if (data.slug) {
+                slug.value = data.slug;
+            }
+        })
+        .catch(error => console.log("Error fetching slug: ", error));
 });
+
 
 </script>
 

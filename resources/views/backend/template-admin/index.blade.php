@@ -313,9 +313,9 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="{{ route('tiket') }}" class="nav-link">
+                    <a href="{{ route('perusahaan') }}" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
-                      <p>Tiket</p>
+                      <p>Perusahaan</p>
                     </a>
                   </li>
                   <li class="nav-item">
@@ -504,6 +504,7 @@
       integrity="sha256-XPpPaZlU8S/HWf7FZLAncLg2SAkP8ScUTII89x9D3lY="
       crossorigin="anonymous"
     ></script>
+   
     <!-- jsvectormap -->
     <script>
       const visitorsData = {
@@ -613,8 +614,7 @@
     </script>
     <!--end::Script-->
 
-
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
       function comfirmDelete(deleteUrl) {
           Swal.fire({
