@@ -55,29 +55,23 @@
 </style>
 
 
+
 <div class="content">
     <div class="container-fluid">
-        <h1>Edit Data</h1>
+        <h1>Tambah Data</h1>
         <div class="row">
             <div class="col-lg-12">
                 <div class="card p-3">
-                    <form method="post" action="{{ route('category.update',$category->id) }}" enctype="multipart/form-data">
+                    <form method="post" action="{{ route('perusahaan.insert') }}" enctype="multipart/form-data">
                         @csrf 
-                        
                         <div class="mb-3">
-                            <label for="image" class="form-label">Foto</label>
-                            <input type="file" id="image" name="foto" class="form-control @error('foto') is-invalid @enderror">
+                            <label for="image" class="form-label">Logo</label>
+                            <input type="file" id="image" name="logo" class="form-control @error('logo') is-invalid @enderror">
                             <div class="image-preview" id="thumbnailInput">
-                                
-                                @if($category->foto)
-                                <img src="{{ asset('foto/' . $category->foto) }}" alt="Old Image Preview" id="previewImage" style="display: block;">
-                                @else
                                 <img src="#" alt="Image Preview" id="previewImage" style="display: none;">
                                 <span class="preview-text" id="previewText">No image selected</span>
-                                @endif
-
                             </div>
-                            @error('foto')
+                            @error('logo')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -85,10 +79,10 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="title" class="col-sm-2 col-form-label">Category</label>
-                            <input type="text" class="form-control" name="name" value="{{ old('name',$category->name) }}" id="category">
+                            <label for="title" class="col-sm-2 col-form-label">Nama Perusahaan</label>
+                            <input type="text" class="form-control" name="nama" value="{{ old('nama') }}" id="nama">
                             
-                            <input type="hidden" name="slug" id="slug" value="{{ old('slug',$category->slug) }}">
+                            <input type="hidden" name="slug" id="slug">
                         </div>
                       
                     
@@ -103,11 +97,11 @@
 
 
 <script>
-    const category = document.querySelector('#category');
+    const nama = document.querySelector('#nama');
     const slug = document.querySelector('#slug');
 
-    category.addEventListener('change', function() {
-        fetch('/category/checkSlug?category=' + category.value)
+    nama.addEventListener('change', function() {
+        fetch('/perusahaan/checkSlug?nama=' + nama.value)
             .then(response => response.json())
             .then(data => slug.value = data.slug);
 });

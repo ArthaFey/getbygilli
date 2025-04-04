@@ -55,6 +55,7 @@
 </style>
 
 
+
 <div class="content">
     <div class="container-fluid">
         <h1>Tambah Data</h1>
@@ -80,7 +81,7 @@
 
                         <div class="mb-3">
                             <label for="title" class="col-sm-2 col-form-label">Category</label>
-                            <input type="text" class="form-control" name="name" value="{{ old('name') }}" id="category">
+                            <input type="text" class="form-control" name="name" value="{{ old('name') }}" id="nama">
                             
                             <input type="hidden" name="slug" id="slug">
                         </div>
@@ -97,15 +98,19 @@
 
 
 <script>
-    const category = document.querySelector('#category');
+    const nama = document.querySelector('#nama');  // Pastikan ID di JavaScript sesuai dengan ID HTML
     const slug = document.querySelector('#slug');
 
-    category.addEventListener('change', function() {
-        fetch('/category/checkSlug?category=' + category.value)
+    nama.addEventListener('input', function() {
+        fetch('/category/checkSlug?name=' + encodeURIComponent(nama.value))  // Sesuaikan parameter di URL
             .then(response => response.json())
-            .then(data => slug.value = data.slug);
-});
-
+            .then(data => {
+                if (data.slug) {
+                    slug.value = data.slug;
+                }
+            })
+            .catch(error => console.log("Error fetching slug: ", error));
+    });
 </script>
 
 <script>
