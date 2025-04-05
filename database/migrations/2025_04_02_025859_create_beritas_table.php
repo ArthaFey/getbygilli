@@ -18,7 +18,8 @@ return new class extends Migration
             $table->enum('category',['Bali','Jawa','Raja Ampat']);
             $table->text('excerpt');
             $table->longText('content');
-            $table->date(date);
+            $table->date('date');
+            $table->text('hit');
             $table->timestamps();
         });
     }

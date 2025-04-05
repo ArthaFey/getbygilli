@@ -27,6 +27,9 @@ Route::get('/',[HomeController::class,'home'])->name('home');
 Route::get('/news',[BeritaController::class, 'news'])->name('news');
 Route::get('/tambahdata',[BeritaController::class, 'tambahdata'])->name('tambahdata');
 Route::post('/insertdata',[BeritaController::class, 'insertdata'])->name('insertdata');
+Route::get('/tampilkandata/{id}',[BeritaController::class, 'tampilkandata'])->name('tampilkandata');
+Route::post('/updatedata/{id}',[BeritaController::class, 'updatedata'])->name('updatedata');
+Route::get('/delete/{id}',[BeritaController::class, 'delete'])->name('delete');
 // ## TESTIMONI ## //
 
 

@@ -17,8 +17,31 @@ class BeritaController extends Controller
         return view('backend.berita.uploaddata');
     }
     public function insertdata(Request $request){
-        Berita::create($request->all());
-        return redirect()->route('news');
+        $data = Berita::create($request->all());
+        if ($request->hasfile('image')) {
+            $request->file('image')->move('fotoberita/', $request->file('image')->getClientOriginalName() );
+            $data->image = $request->file('image')->getClientOriginalName();
+            $data->save();
+        }
+        return redirect()->route('news')->with('success','Data Berhasil Ditambahkan');
+    }
+    public function tampilkandata($id){
+
+        $data = Berita::find($id);
+        return view('backend.berita.editberita', compact('data'));
+
+    }
+    public function updatedata(Request $request, $id){
+        $data = Berita::find($id);
+        $data->update($request->all());
+        return redirect()->route('news')->with('success','Data Berhasil Diedit');
+    }
+    public function delete($id){
+
+        $data = Berita::find($id);
+        $data->delete();
+        return redirect()->route('news')->with('success','Data Berhasil Dihapus');
+
     }
     
 }
