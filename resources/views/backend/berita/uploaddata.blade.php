@@ -66,7 +66,7 @@
 
                 <div class="mb-3">
                     <label for="image" class="form-label">Gambar</label>
-                    <input type="file" id="image" name="gambar" class="form-control @error('gambar') is-invalid @enderror">
+                    <input type="file" id="image" name="image" class="form-control @error('gambar') is-invalid @enderror">
                     <div class="image-preview" id="thumbnailInput">
                         <img src="#" alt="Image Preview" id="previewImage" style="display: none;">
                         <span class="preview-text" id="previewText">No image selected</span>
@@ -80,7 +80,7 @@
 
                 <div class="mb-3">
                     <label for="judulProgram" class="form-label">Judul</label>
-                    <input type="text" class="form-control @error('judul')is-invalid @enderror" value="{{ old('judul') }}" name="judul" id="judul">
+                    <input type="text" name="title"  class="form-control @error('judul')is-invalid @enderror" value="{{ old('judul') }}" name="judul" id="judul">
                     @error('judul')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -90,7 +90,7 @@
 
                 <div class="mb-3">
                     <label for="kategori" class="form-label">Kategori</label>
-                    <select class="form-control" name="kategori" id="kategori">
+                    <select class="form-control" name="category" id="kategori">
                         <option value="Bali">Bali</option>
                         <option value="Jawa">Jawa</option>
                         <option value="Lombok">Lombok</option>
@@ -111,7 +111,7 @@
 
                 <div class="mb-3">
                     <label for="ckeditor" class="form-label">Content</label>
-                    <textarea class="form-control @error('deskripsi')is-invalid @enderror" name="deskripsi" id="summernote">{{ old('deskripsi') }}</textarea>
+                    <textarea class="form-control @error('deskripsi')is-invalid @enderror" name="content" id="summernote">{{ old('deskripsi') }}</textarea>
                     @error('deskripsi')
                     <div class="invalid-feedback">
                         {{ $message }}
