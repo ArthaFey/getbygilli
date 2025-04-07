@@ -57,7 +57,8 @@
 <!-- Summernote CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css">
 
-<div class="form-card bg-white p-4 rounded shadow-sm">
+<div class="container mt-4">
+
             <h4 class="form-title">Add Berita</h4>
             
             <form action="/insertdata" method="post" enctype="multipart/form-data">
