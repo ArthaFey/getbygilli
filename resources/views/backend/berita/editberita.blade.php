@@ -79,16 +79,6 @@
         </div>
 
         <div class="mb-3">
-            <label for="kategori" class="form-label">Kategori</label>
-            <select class="form-control" name="category" id="kategori">
-                <option selected>{{ old('category', $data->category) }}</option>
-                <option value="Bali">Bali</option>
-                <option value="Jawa">Jawa</option>
-                <option value="Lombok">Lombok</option>
-            </select>
-        </div>
-
-        <div class="mb-3">
             <label for="excerpt" class="form-label">Short Content Berita</label>
             <textarea class="form-control" name="excerpt" id="excerpt">{{ old('excerpt', $data->excerpt) }}</textarea>
         </div>

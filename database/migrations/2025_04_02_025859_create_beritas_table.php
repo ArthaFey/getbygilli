@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('image');
             $table->string('title');
-            $table->enum('category',['Bali','Jawa','Raja Ampat']);
             $table->text('excerpt');
             $table->longText('content');
             $table->date('date');
