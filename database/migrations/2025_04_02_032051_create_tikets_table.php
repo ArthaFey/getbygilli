@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->integer('harga_dewasa');
             $table->integer('harga_anak_anak');
+            $table->text('keterangan_tiba');
             $table->timestamps();
         });
     }

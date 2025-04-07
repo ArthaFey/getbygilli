@@ -83,6 +83,12 @@
                             <label for="title" class="col-sm-2 col-form-label">Harga Anak-Anak</label>
                             <input type="number" class="form-control" name="harga_anak_anak" value="{{ old('harga_anak_anak',$tiket->harga_anak_anak) }}" id="">
                         </div>
+
+
+                        <div class="mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">Keterangan Tiba</label>
+                            <textarea name="keterangan_tiba" id="summernote">{{ old('keterangan_tiba',$tiket->keterangan_tiba) }}</textarea>
+                        </div>
                       
                         <div class="mb-3">
                         <label for="title" class="col-sm-2 col-form-label">Category</label>      

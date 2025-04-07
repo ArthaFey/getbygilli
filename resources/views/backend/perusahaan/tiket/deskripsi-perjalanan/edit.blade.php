@@ -1,6 +1,5 @@
 @extends('backend.template-admin.index')
 @section('content')
-
 <style>
     .custom-file-upload:hover {
         border-color: #007bff;
@@ -61,43 +60,44 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card p-3">
-                    <form method="post" action="{{ route('tiket.insert',$perusahaan->id) }}" enctype="multipart/form-data">
+                    <form method="post" action="{{ route('deskripsi.update',$deskripsi->id) }}" enctype="multipart/form-data">
                         @csrf 
                         
-                        <input type="hidden" name="perusahaan_id" value="{{ $perusahaan->id }}" id="">
+                        <input type="hidden" name="tiket_id" value="{{ old('tiket_id',$deskripsi->tiket_id) }}" id="">
 
                         <div class="mb-3">
-                            <label for="title" class="col-sm-2 col-form-label">Judul Tiket</label>
-                            <input type="text" class="form-control" name="judul_tiket" value="{{ old('judul_tiket') }}" id="judul_tiket">
-                            
-                            <input type="hidden" name="slug" id="slug">
+                            <label for="image" class="form-label">Icon</label>
+                            <input type="file" id="image" name="icon" class="form-control @error('icon') is-invalid @enderror">
+                            <div class="image-preview" id="thumbnailInput">
+                                
+                                @if($deskripsi->icon)
+                                <img src="{{ asset('foto/' . $deskripsi->icon) }}" alt="Old Image Preview" id="previewImage" style="display: block;">
+                                @else
+                                <img src="#" alt="Image Preview" id="previewImage" style="display: none;">
+                                <span class="preview-text" id="previewText">No image selected</span>
+                                @endif
+
+                            </div>
+                            @error('icon')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
+                        <div class="mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">Waktu</label>
+                            <input type="text" class="form-control" name="waktu" value="{{ old('waktu',$deskripsi->waktu) }}" id="">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">Keterangan</label>
+                            <textarea name="keterangan" id="summernote">{{ old('keterangan',$deskripsi->keterangan) }}</textarea>
+                        </div>
+
+
+                    
                       
-                        <div class="mb-3">
-                            <label for="title" class="col-sm-2 col-form-label">Harga Dewasa</label>
-                            <input type="number" class="form-control" name="harga_dewasa" value="{{ old('harga_dewasa') }}" id="">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="title" class="col-sm-2 col-form-label">Harga Anak-Anak</label>
-                            <input type="number" class="form-control" name="harga_anak_anak" value="{{ old('harga_anak_anak') }}" id="">
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="title" class="col-sm-2 col-form-label">Keterangan Tiba</label>
-                            <textarea name="keterangan_tiba" id="summernote"></textarea>
-                        </div>
                       
-                        <div class="mb-3">
-                        <label for="title" class="col-sm-2 col-form-label">Category</label>      
-                        <select class="form-select" name="category_id" aria-label="Default select example">
-                            <option selected>Pilih Category</option>
-                            @foreach ($category as $item )
-                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                            @endforeach
-                          </select>
-                        </div>
                     
                         <button type="submit" class="btn btn-success">Save</button>
                     </form>
@@ -106,25 +106,6 @@
         </div>
     </div>
 </div>
-
-
-<script>
-    const judul_tiket = document.querySelector('#judul_tiket');
-    const slug = document.querySelector('#slug');
-
-    judul_tiket.addEventListener('input', function() {
-    fetch('/tiket/checkSlug?judul_tiket=' + encodeURIComponent(judul_tiket.value))
-        .then(response => response.json())
-        .then(data => {
-            if (data.slug) {
-                slug.value = data.slug;
-            }
-        })
-        .catch(error => console.log("Error fetching slug: ", error));
-});
-
-
-</script>
 
 <script>
     // Image preview handling
@@ -147,5 +128,6 @@
         }
     });
 </script>
-    
+
+
 @endsection

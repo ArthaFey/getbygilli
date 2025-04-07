@@ -64,6 +64,7 @@ Route::get('/tiket-edit/{id}',[PerusahaanController::class,'editTiket'])->name('
 Route::post('/tiket-update/{id}',[PerusahaanController::class,'updateTiket'])->name('tiket.update');
 Route::get('/tiket-delete/{id}',[PerusahaanController::class,'deleteTiket'])->name('tiket.delete');
 
+
 // ## FOTO TRANSPORTASI ## //
 Route::get('/foto-transportasi-show/{id}',[PerusahaanController::class,'showfoto'])->name('foto.show');
 Route::get('/foto-transportasi-tambah/{id}',[PerusahaanController::class,'tambahfoto'])->name('foto.tambah');
@@ -71,6 +72,18 @@ Route::post('/foto-transportasi-insert/{id}',[PerusahaanController::class,'inser
 Route::get('/foto-transportasi-edit/{id}',[PerusahaanController::class,'editfoto'])->name('foto.edit');
 Route::post('/foto-transportasi-update/{id}',[PerusahaanController::class,'updatefoto'])->name('foto.update');
 Route::get('/foto-transportasi-delete/{id}',[PerusahaanController::class,'deletefoto'])->name('foto.delete');
+
+
+// ## FOTO TRANSPORTASI ## //
+Route::get('/deskripsi-perjalanan-show/{id}',[PerusahaanController::class,'showdeskripsi'])->name('deskripsi.show');
+Route::get('/deskripsi-perjalanan-tambah/{id}',[PerusahaanController::class,'tambahdeskripsi'])->name('deskripsi.tambah');
+Route::post('/deskripsi-perjalanan-insert/{id}',[PerusahaanController::class,'insertdeskripsi'])->name('deskripsi.insert');
+Route::get('/deskripsi-perjalanan-edit/{id}',[PerusahaanController::class,'editdeskripsi'])->name('deskripsi.edit');
+Route::post('/deskripsi-perjalanan-update/{id}',[PerusahaanController::class,'updatedeskripsi'])->name('deskripsi.update');
+Route::get('/deskripsi-perjalanan-delete/{id}',[PerusahaanController::class,'deletedeskripsi'])->name('deskripsi.delete');
+
+
+
 
 
 
