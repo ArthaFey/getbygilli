@@ -57,16 +57,14 @@
 <!-- Summernote CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css">
 
-<div class="" style="background-color: white;">
-    <div class="container mt-4 mb-4">
-        <div class="form-card">
+<div class="form-card bg-white p-4 rounded shadow-sm">
             <h4 class="form-title">Add Berita</h4>
             
             <form action="/insertdata" method="post" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-3">
-                    <label for="image" class="form-label">Gambar</label>
+                    <label for="image" class="form-label">Gambar (jpg/png)</label>
                     <input type="file" id="image" name="image" class="form-control">
                     <div class="image-preview" id="thumbnailInput">
                         <img src="#" alt="Image Preview" id="previewImage" style="display: none;">

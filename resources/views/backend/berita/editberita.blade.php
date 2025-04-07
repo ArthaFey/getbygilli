@@ -1,6 +1,8 @@
 @extends('backend.template-admin.index')
 @section('content')
 
+<div class="container mt-4 mb-4">
+
 <style>
     .custom-file-upload:hover {
         border-color: #007bff;
@@ -57,63 +59,59 @@
 <!-- Summernote CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css">
 
-<div class="" style="background-color: white;">
-    <div class="container mt-4 mb-4">
-        <div class="form-card">
-            <h4 class="form-title">Edit Berita</h4>
-            
-            <form action="/updatedata/{{ $data->id }}" method="post" enctype="multipart/form-data">
-                @csrf
+<div class="form-card bg-white p-4 rounded shadow-sm">
+    <h4 class="form-title">Edit Berita</h4>
+    
+    <form action="/updatedata/{{ $data->id }}" method="post" enctype="multipart/form-data">
+        @csrf
 
-                <div class="mb-3">
-                    <label for="image" class="form-label">Gambar</label>
-                    <input type="file" id="image" name="image" class="form-control" >
-                    <div class="image-preview" id="thumbnailInput">
-                        <img src="{{ asset('fotoberita/' . $data->image) }}" alt="Image Preview" id="previewImage" style="display: block;">
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="judulProgram" class="form-label">Judul</label>
-                    <input type="text" name="title" class="form-control" value="{{ old('title', $data->title) }}">
-                </div>
-
-                <div class="mb-3">
-                    <label for="kategori" class="form-label">Kategori</label>
-                    <select class="form-control" name="category" id="kategori">
-                        <option selected>{{ old('category', $data->category) }}</option>
-                        <option value="Bali">Bali</option>
-                        <option value="Jawa">Jawa</option>
-                        <option value="Lombok">Lombok</option>
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label for="excerpt" class="form-label">Excerpt</label>
-                    <textarea class="form-control" name="excerpt" id="excerpt">{{ old('excerpt', $data->excerpt) }}</textarea>
-                </div>
-
-                <div class="mb-3">
-                    <label for="content" class="form-label">Content</label>
-                    <textarea class="form-control" name="content" id="content">{{ old('content', $data->excerpt) }}</textarea>
-                </div>
-
-                <div class="mb-3">
-                    <label for="date" class="form-label">Date</label>
-                    <input type="date" class="form-control @error('date')is-invalid @enderror" value="{{ old('date', $data->date) }}" name="date" id="date">
-                </div>
-
-                <div class="mb-3">
-                    <label for="hit" class="form-label">Hit</label>
-                    <input type="text" name="hit" class="form-control" value="{{ old('hit', $data->hit) }}" id="hit">
-                </div>
-                
-                <div class="d-flex justify-content-end mt-4">
-                    <button type="submit" class="btn btn-primary">Save Change</button>
-                </div>
-            </form>
+        <div class="mb-3">
+            <label for="image" class="form-label">Gambar</label>
+            <input type="file" id="image" name="image" class="form-control" >
+            <div class="image-preview" id="thumbnailInput">
+                <img src="{{ asset('fotoberita/' . $data->image) }}" alt="Image Preview" id="previewImage" style="display: block;">
+            </div>
         </div>
-    </div>
+
+        <div class="mb-3">
+            <label for="judulProgram" class="form-label">Judul</label>
+            <input type="text" name="title" class="form-control" value="{{ old('title', $data->title) }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="kategori" class="form-label">Kategori</label>
+            <select class="form-control" name="category" id="kategori">
+                <option selected>{{ old('category', $data->category) }}</option>
+                <option value="Bali">Bali</option>
+                <option value="Jawa">Jawa</option>
+                <option value="Lombok">Lombok</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="excerpt" class="form-label">Excerpt</label>
+            <textarea class="form-control" name="excerpt" id="excerpt">{{ old('excerpt', $data->excerpt) }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="content" class="form-label">Content</label>
+            <textarea class="form-control" name="content" id="content">{{ old('content', $data->excerpt) }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input type="date" class="form-control @error('date')is-invalid @enderror" value="{{ old('date', $data->date) }}" name="date" id="date">
+        </div>
+
+        <div class="mb-3">
+            <label for="hit" class="form-label">Hit</label>
+            <input type="text" name="hit" class="form-control" value="{{ old('hit', $data->hit) }}" id="hit">
+        </div>
+        
+        <div class="d-flex justify-content-end mt-4">
+            <button type="submit" class="btn btn-primary">Save Change</button>
+        </div>
+    </form>
 </div>
 
 <!-- Summernote Scripts -->
@@ -159,14 +157,16 @@
             reader.onload = function (e) {
                 previewImage.src = e.target.result;
                 previewImage.style.display = "block";
-                previewText.style.display = "none";
+                if (previewText) previewText.style.display = "none";
             };
             reader.readAsDataURL(file);
         } else {
             previewImage.style.display = "none";
-            previewText.style.display = "block";
+            if (previewText) previewText.style.display = "block";
         }
     });
 </script>
+
+</div> {{-- Tutup container utama --}}
 
 @endsection
