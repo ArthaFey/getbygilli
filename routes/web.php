@@ -30,6 +30,8 @@ Route::post('/insertdata',[BeritaController::class, 'insertdata'])->name('insert
 Route::get('/tampilkandata/{id}',[BeritaController::class, 'tampilkandata'])->name('tampilkandata');
 Route::post('/updatedata/{id}',[BeritaController::class, 'updatedata'])->name('updatedata');
 Route::get('/delete/{id}',[BeritaController::class, 'delete'])->name('delete');
+
+
 // ## TESTIMONI ## //
 
 
