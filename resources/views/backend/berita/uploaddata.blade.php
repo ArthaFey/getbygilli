@@ -61,67 +61,53 @@
         <div class="form-card">
             <h4 class="form-title">Add Berita</h4>
             
-            <form action="{{ route('tambahdata') }}" method="post" enctype="multipart/form-data">
+            <form action="/insertdata" method="post" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-3">
                     <label for="image" class="form-label">Gambar</label>
-                    <input type="file" id="image" name="gambar" class="form-control @error('gambar') is-invalid @enderror">
+                    <input type="file" id="image" name="image" class="form-control">
                     <div class="image-preview" id="thumbnailInput">
                         <img src="#" alt="Image Preview" id="previewImage" style="display: none;">
                         <span class="preview-text" id="previewText">No image selected</span>
                     </div>
-                    @error('gambar')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
+                
                 </div>
 
                 <div class="mb-3">
                     <label for="judulProgram" class="form-label">Judul</label>
-                    <input type="text" class="form-control @error('judul')is-invalid @enderror" value="{{ old('judul') }}" name="judul" id="judul">
-                    @error('judul')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
+                    <input type="text" name="title"  class="form-control" value="{{ old('title') }}">
+                  
                 </div>
 
                 <div class="mb-3">
                     <label for="kategori" class="form-label">Kategori</label>
-                    <select class="form-control" name="kategori" id="kategori">
+                    <select class="form-control" name="category" id="kategori">
                         <option value="Bali">Bali</option>
                         <option value="Jawa">Jawa</option>
                         <option value="Lombok">Lombok</option>
                     </select>
                 </div>
 
-                <input type="hidden" id="slug" name="slug">
-
                 <div class="mb-3">
                     <label for="excerpt" class="form-label">Excerpt</label>
-                    <textarea class="form-control @error('excerpt')is-invalid @enderror" name="excerpt" id="excerpt">{{ old('excerpt') }}</textarea>
-                    @error('excerpt')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
+                    <textarea class="form-control" name="excerpt" id="excerpt">{{ old('excerpt') }}</textarea>
+
                 </div>
 
                 <div class="mb-3">
                     <label for="ckeditor" class="form-label">Content</label>
-                    <textarea class="form-control @error('deskripsi')is-invalid @enderror" name="deskripsi" id="summernote">{{ old('deskripsi') }}</textarea>
-                    @error('deskripsi')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
+                    <textarea class="form-control" name="content" id="summernote">{{ old('content') }}</textarea>
                 </div>
 
                 <div class="mb-3">
                     <label for="date" class="form-label">Date</label>
                     <input type="date" class="form-control @error('date')is-invalid @enderror" value="{{ old('date') }}" name="date" id="date">
+                </div>
+                <div class="mb-3">
+                    <label for="judulProgram" class="form-label">Hit</label>
+                    <input type="text" name="hit"  class="form-control " value="{{ old('hit') }}"  id="hit">
+                 
                 </div>
                 
                 <div class="d-flex justify-content-end mt-4">

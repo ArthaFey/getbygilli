@@ -14,11 +14,12 @@ class BeritaSeeder extends Seeder
     {
         DB::table('beritas')->insert([
             'title'=>'Pemandangan Bagus Di Pantai Kuta Bali',
-            'kategori'=>'Bali',
+            'category'=>'Bali',
             'date'=>'2025-04-04',
             'excerpt'=>'pemandangan yang sangat abgus terpampang nyata di pantai kuta bali yang sangat indah',
             'content'=>'pemandangan yang sangat abgus terpampang nyata di pantai kuta bali yang sangat indah',
             'hit'=>'345',
+            'image'=>'gambar',
         ]);
     }
 }

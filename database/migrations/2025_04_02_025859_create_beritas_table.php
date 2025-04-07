@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('excerpt');
             $table->longText('content');
             $table->date('date');
+            $table->text('hit');
             $table->timestamps();
         });
     }
