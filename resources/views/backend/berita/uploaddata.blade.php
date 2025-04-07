@@ -54,11 +54,11 @@
     }
 </style>
 
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+<!-- Summernote CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css">
 
-<div class="" style="background-color: white;">
-    <div class="container mt-4 mb-4">
-        <div class="form-card">
+<div class="container mt-4">
+
             <h4 class="form-title">Add Berita</h4>
             
             <form action="/insertdata" method="post" enctype="multipart/form-data">
@@ -71,13 +71,11 @@
                         <img src="#" alt="Image Preview" id="previewImage" style="display: none;">
                         <span class="preview-text" id="previewText">No image selected</span>
                     </div>
-                
                 </div>
 
                 <div class="mb-3">
                     <label for="judulProgram" class="form-label">Judul</label>
-                    <input type="text" name="title"  class="form-control" value="{{ old('title') }}">
-                  
+                    <input type="text" name="title" class="form-control" value="{{ old('title') }}">
                 </div>
 
                 <div class="mb-3">
@@ -90,24 +88,23 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="excerpt" class="form-label">Excerpt</label>
+                    <label for="excerpt" class="form-label">Short Content Berita</label>
                     <textarea class="form-control" name="excerpt" id="excerpt">{{ old('excerpt') }}</textarea>
-
                 </div>
 
                 <div class="mb-3">
-                    <label for="ckeditor" class="form-label">Content</label>
-                    <textarea class="form-control" name="content" id="summernote">{{ old('content') }}</textarea>
+                    <label for="content" class="form-label">Content Berita</label>
+                    <textarea class="form-control" name="content" id="content">{{ old('content') }}</textarea>
                 </div>
 
                 <div class="mb-3">
                     <label for="date" class="form-label">Date</label>
                     <input type="date" class="form-control @error('date')is-invalid @enderror" value="{{ old('date') }}" name="date" id="date">
                 </div>
+
                 <div class="mb-3">
-                    <label for="judulProgram" class="form-label">Hit</label>
-                    <input type="text" name="hit"  class="form-control " value="{{ old('hit') }}"  id="hit">
-                 
+                    <label for="hit" class="form-label">Hit</label>
+                    <input type="text" name="hit" class="form-control" value="{{ old('hit') }}" id="hit">
                 </div>
                 
                 <div class="d-flex justify-content-end mt-4">
@@ -118,15 +115,16 @@
     </div>
 </div>
 
+<!-- Summernote Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
 <script>
     $(document).ready(function() {
-        $('#summernote').summernote({
-            height: 300, // Ukuran tetap lebih besar
-            minHeight: 300,
-            maxHeight: 300,
-            disableResizeEditor: true, // Mencegah perubahan ukuran editor
+        $('#content').summernote({
+            height: 300,
+            placeholder: 'Tulis isi berita di sini...',
             toolbar: [
                 ['style', ['style']],
                 ['font', ['bold', 'italic', 'underline', 'clear']],
@@ -136,20 +134,15 @@
                 ['para', ['ul', 'ol', 'paragraph']],
                 ['table', ['table']],
                 ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
+                ['view', ['codeview', 'help']]
+            ],
+            colors: [
+                ['#000000', '#424242', '#636363', '#9C9C94', '#CEC6CE', '#EFEFEF', '#F7F7F7', '#FFFFFF'],
+                ['#FF0000', '#FF9C00', '#FFFF00', '#00FF00', '#00FFFF', '#0000FF', '#9C00FF', '#FF00FF'],
+                ['#F7977A', '#F9AD81', '#FDC68A', '#FFF79A', '#C4DF9B', '#A2D39C', '#82CA9D', '#7BCDC8'],
+                ['#6ECFF6', '#7EA7D8', '#8493CA', '#8882BE', '#A187BE', '#BC8DBF', '#F49AC2', '#F6989D']
             ]
         });
-    });
-</script>
-
-<script>
-    const judul = document.querySelector('#judul');
-    const slug = document.querySelector('#slug');
-
-    judul.addEventListener('change', function(){
-        fetch('/berita/checkSlug?judul=' + judul.value)
-        .then(response => response.json())
-        .then(data => slug.value = data.slug)
     });
 </script>
 
@@ -159,7 +152,7 @@
         const file = this.files[0];
         const previewImage = document.getElementById("previewImage");
         const previewText = document.getElementById("previewText");
-        
+
         if (file) {
             const reader = new FileReader();
             reader.onload = function (e) {
