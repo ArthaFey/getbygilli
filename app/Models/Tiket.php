@@ -32,4 +32,8 @@ class Tiket extends Model
     public function fototransportasi(){
         return $this->hasMany(FotoTransportasi::class);
     }
+
+    public function deskripsitiket(){
+        return $this->hasMany(DeskripsiTiket::class);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\DeskripsiTiket;
 use App\Models\FotoTransportasi;
 use App\Models\Perusahaan;
 use App\Models\Tiket;
@@ -189,6 +190,66 @@ class PerusahaanController extends Controller
         $fotoTransportasi = FotoTransportasi::findOrFail($id);
         $fotoTransportasi->delete();
         return back()->with('delete','Delete Data Success');
+    }
+
+    // ## DESKRIPSI TIKET ## //
+    public function showdeskripsi($id){
+        $tiket = Tiket::findOrFail($id);
+        $deskripsi = $tiket->deskripsitiket()->orderByDesc('created_at')->paginate(10);
+        return view('backend.perusahaan.tiket.deskripsi-perjalanan.index',compact('tiket','deskripsi'));
+    }
+
+    public function tambahdeskripsi($id){
+        $tiket =  Tiket::findOrFail($id);
+        return view('backend.perusahaan.tiket.deskripsi-perjalanan.tambah',compact('tiket'));
+    }
+
+    public function insertdeskripsi(Request $request,$id){
+        $tiket =  Tiket::findOrFail($id);
+        $deskripsi = DeskripsiTiket::create($request->all());
+
+        if($request->hasFile('icon')){
+            $filename = $request->file('icon')->getClientOriginalName();
+            $request->file('icon')->move('foto/', $filename);
+            $deskripsi->icon = $filename;
+            $deskripsi->save();
+        }
+
+        return redirect()->route('deskripsi.show',$tiket->id)->with('insert','Add Data Success');
+    }
+
+    public function editdeskripsi($id){
+        $deskripsi = DeskripsiTiket::findOrFail($id);
+        return view('backend.perusahaan.tiket.deskripsi-perjalanan.edit',compact('deskripsi'));
+    }
+
+    public function updatedeskripsi(Request $request,$id){
+        $deskripsi = DeskripsiTiket::findOrFail($id);
+        $data = $request->all();
+
+        if ($request->hasFile('icon')) {
+            // Hapus file lama jika ada
+            if ($deskripsi->icon) {
+                $oldFilePath = public_path('foto/' . $deskripsi->icon);
+                if (file_exists($oldFilePath)) {
+                    unlink($oldFilePath); // Menghapus file lama
+                }
+            }
+ 
+            $file = $request->file('icon');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move('foto/', $filename); // Memindahkan file ke folder yang benar
+            $data['icon'] = $filename; // Menyimpan nama file baru ke dalam data
+        }
+        $deskripsi->update($data);
+
+        return redirect()->route('deskripsi.show',$deskripsi->tiket->id)->with('update','Update Data Success');
+    }
+
+    public function deletedeskripsi($id){
+        $deskripsi = DeskripsiTiket::findOrFail($id);
+        $deskripsi->delete();
+        return back()->with('delete','Delete  Data Success');
     }
 
 
