@@ -89,12 +89,12 @@
         </div>
 
         <div class="mb-3">
-            <label for="excerpt" class="form-label">Excerpt</label>
+            <label for="excerpt" class="form-label">Short Content Berita</label>
             <textarea class="form-control" name="excerpt" id="excerpt">{{ old('excerpt', $data->excerpt) }}</textarea>
         </div>
 
         <div class="mb-3">
-            <label for="content" class="form-label">Content</label>
+            <label for="content" class="form-label">Content Berita</label>
             <textarea class="form-control" name="content" id="content">{{ old('content', $data->excerpt) }}</textarea>
         </div>
 

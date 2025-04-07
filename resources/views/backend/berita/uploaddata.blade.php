@@ -65,7 +65,7 @@
                 @csrf
 
                 <div class="mb-3">
-                    <label for="image" class="form-label">Gambar (jpg/png)</label>
+                    <label for="image" class="form-label">Gambar</label>
                     <input type="file" id="image" name="image" class="form-control">
                     <div class="image-preview" id="thumbnailInput">
                         <img src="#" alt="Image Preview" id="previewImage" style="display: none;">
@@ -88,12 +88,12 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="excerpt" class="form-label">Excerpt</label>
+                    <label for="excerpt" class="form-label">Short Content Berita</label>
                     <textarea class="form-control" name="excerpt" id="excerpt">{{ old('excerpt') }}</textarea>
                 </div>
 
                 <div class="mb-3">
-                    <label for="content" class="form-label">Content</label>
+                    <label for="content" class="form-label">Content Berita</label>
                     <textarea class="form-control" name="content" id="content">{{ old('content') }}</textarea>
                 </div>
 
