@@ -159,7 +159,7 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="./news" class="nav-link">
+                    <a href="{{ route('news') }}" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
                       <p>Berita</p>
                     </a>

@@ -23,7 +23,7 @@ class BeritaController extends Controller
             $data->image = $request->file('image')->getClientOriginalName();
             $data->save();
         }
-        return redirect()->route('news')->with('success','Data Berhasil Ditambahkan');
+        return redirect()->route('news')->with('insert','Add Data Success');
     }
     public function tampilkandata($id){
 
@@ -34,13 +34,13 @@ class BeritaController extends Controller
     public function updatedata(Request $request, $id){
         $data = Berita::find($id);
         $data->update($request->all());
-        return redirect()->route('news')->with('success','Data Berhasil Diedit');
+        return redirect()->route('news')->with('update','Update Data Success');
     }
     public function delete($id){
 
         $data = Berita::find($id);
         $data->delete();
-        return redirect()->route('news')->with('success','Data Berhasil Dihapus');
+        return redirect()->route('news')->with('delete','Delete Data Success');
 
     }
     
