@@ -5,17 +5,20 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class EmployeeSeeder extends Seeder
+class BeritaSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('employees')->insert([
-            'nama'=>'I Made Satria Wintara',
-            'jeniskelamin'=>'cowo',
-            'notelepon'=>'0881034567654',
+        DB::table('beritas')->insert([
+            'title'=>'Pemandangan Bagus Di Pantai Kuta Bali',
+            'date'=>'2025-04-04',
+            'excerpt'=>'pemandangan yang sangat abgus terpampang nyata di pantai kuta bali yang sangat indah',
+            'content'=>'pemandangan yang sangat abgus terpampang nyata di pantai kuta bali yang sangat indah',
+            'hit'=>'345',
+            'image'=>'gambar',
         ]);
     }
 }
