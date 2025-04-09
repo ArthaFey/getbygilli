@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TestimoniController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,7 +21,13 @@ Route::get('/',[HomeController::class,'home'])->name('home');
 
 
 // ## TESTIMONI ## //
+Route::get('/ulasan',[TestimoniController::class,'ulasan'])->name('ulasan');
 
 
+Route::get('/tambah_ulasan',[TestimoniController::class,'tambah_ulasan'])->name('tambah_ulasan');
+Route::post('/insertdata',[TestimoniController::class,'insertdata'])->name('insertdata');
 
+Route::get('/editulasan/{id}',[TestimoniController::class,'editulasan'])->name('editulasan');
+Route::post('/updateulasan/{id}',[TestimoniController::class,'updateulasan'])->name('updateulasan');
+Route::get('/delete/{id}',[TestimoniController::class,'delete'])->name('delete');
 // ## CATEGORY ## //

@@ -2,8 +2,7 @@
 <html lang="en">
   <!--begin::Head-->
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />php artisan config:clear
-    php artisan cache:clear
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
     <title>AdminLTE v4 | Dashboard</title>
     <!--begin::Primary Meta Tags-->
