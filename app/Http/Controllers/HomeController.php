@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Berita;
 use App\Models\Category;
+use App\Models\Testimoni;
 use App\Models\Tiket;
 use Illuminate\Http\Request;
 
@@ -13,13 +14,15 @@ class HomeController extends Controller
         $category = Category::orderByDesc('created_at')->get();
         $tiket =  Tiket::orderByDesc('created_at')->paginate(12);
         $berita =  Berita::orderByDesc('created_at')->paginate(3);
-        return view('frontend.index',compact('category','tiket','berita'));
+        $review =  Testimoni::orderByDesc('created_at')->paginate(3);
+        return view('frontend.index',compact('category','tiket','berita','review'));
     }
 
     public function category_all($slug){
         $category = Category::where('slug',$slug)->first();
         $tiket = $category->tiket()->with(['fototransportasi','deskripsitiket'])->orderByDesc('created_at')->paginate(20);
-        return view('frontend.category-tiket-all.book-info',compact('category','tiket'));
+        $news = Berita::orderByDesc('created_at')->paginate(4);
+        return view('frontend.category-tiket-all.book-info',compact('category','tiket','news'));
     }
 
     public function detail_berita($id){

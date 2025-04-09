@@ -14,6 +14,23 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="../css/home.css">
+
+  <style>
+    .no-tiket {
+      text-align: center;
+      margin-top: 50px;
+    }
+    .no-tiket img {
+      width: 300px;
+      height: auto;
+    }
+    .no-tiket h2 {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      margin-top: 20px;
+    }
+  </style>
  </head>
  <body class="bg-gray-100">
 
@@ -24,7 +41,7 @@
             <img src="../assets/Background Header.jpg" alt="Banner" class="w-full h-56 object-cover">
             <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center px-5 md:px-16">
                 <div class="flex flex-col md:flex-row items-start md:items-center space-x-0 md:space-x-4">
-                    <img src="assets/gili-logo.png" alt="Gili Wonders" class="w-16 md:w-20 h-auto mb-2 md:mb-0">
+                    <img src="../assets/gili-logo.png" alt="Gili Wonders" class="w-16 md:w-20 h-auto mb-2 md:mb-0">
                 </div>
                 <div class="w-full mb-3">
                     <h1 class="text-2xl font-bold text-white">
@@ -169,6 +186,7 @@
     <!-- Main Content -->
 <main class="container mx-auto px-4 py-8">
   
+    @if (!$category->tiket->isEmpty())
     <main class="container mx-auto px-4 py-8 ">
         <div class="space-y-6">
             
@@ -213,63 +231,35 @@
            
         </div>
     </main>
+    @else
+    <div class="no-tiket">
+        <!-- Gambar Tidak Ada Tiket -->
+        <img src="../assets/no-tiket.png" alt="No Tickets Available" class="mx-auto">
+      </div>
+    @endif
+   
     
     <!-- News Section -->
     <h2 class="text-xl font-bold mt-8 mb-4 scroll-animate" data-animation="fadeIn">
         News
     </h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <!-- News 1 -->
+        @foreach ($news as $berita )
+        <a href="{{ route('detail.berita',$berita->id) }}">
         <div class="bg-white shadow rounded-lg overflow-hidden scroll-animate" data-animation="fadeInUp">
-            <img alt="Private or Shared Snorkeling Trip" class="w-full h-48 object-cover" height="200" src="assets/snorkeling-boat.jpg" width="400"/>
+            <img alt="Private or Shared Snorkeling Trip" class="w-full h-48 object-cover" height="200" src="{{ asset('fotoberita/' .$berita->image) }}" width="400"/>
             <div class="p-4">
                 <h3 class="font-bold">
-                    Private or Shared Snorkeling Trip
+                    {{ $berita->title }}
                 </h3>
                 <p class="text-gray-500">
-                    Explore Lombok's stunning underwater world with a private or shared snorkeling tour! Enjoy crystal-clear waters and vibrant marine life, perfect for all snorkeling experience levels.
+                    {{ $berita->excerpt }}
                 </p>
             </div>
         </div>
-        
-        <!-- News 2 -->
-        <div class="bg-white shadow rounded-lg overflow-hidden scroll-animate" data-animation="fadeInUp" data-delay="0.2s">
-            <img alt="1-Way Speedboat Transfer to Trawangan" class="w-full h-48 object-cover" height="200" src="assets/OIP.jpg" width="400"/>
-            <div class="p-4">
-                <h3 class="font-bold">
-                    1-Way Speedboat Transfer to Trawangan
-                </h3>
-                <p class="text-gray-500">
-                    Enjoy a fast and comfortable speedboat ride to Gili Trawangan! This exclusive transport service ensures a safe and timely arrival at this beautiful tropical island.
-                </p>
-            </div>
-        </div>
-        
-        <!-- News 3 -->
-        <div class="bg-white shadow rounded-lg overflow-hidden scroll-animate" data-animation="fadeInUp" data-delay="0.4s">
-            <img alt="Gili Islands Snorkeling Boat" class="w-full h-48 object-cover" height="200" src="assets/snorkeling-at-crystal.jpg" width="400"/>
-            <div class="p-4">
-                <h3 class="font-bold">
-                    Gili Islands Snorkeling Boat
-                </h3>
-                <p class="text-gray-500">
-                    Discover the underwater paradise of the Gili Islands on an unforgettable snorkeling adventure! Swim among colorful coral reefs and tropical fish in crystal-clear waters.
-                </p>
-            </div>
-        </div>
-        
-        <!-- News 4 -->
-        <div class="bg-white shadow rounded-lg overflow-hidden scroll-animate" data-animation="fadeInUp" data-delay="0.6s">
-            <img alt="Private Car/Van Charter with Driver" class="w-full h-48 object-cover" height="200" src="assets/pantai .jpg" width="400"/>
-            <div class="p-4">
-                <h3 class="font-bold">
-                    Private Car/Van Charter with Driver
-                </h3>
-                <p class="text-gray-500">
-                    Explore Lombok in comfort with a private car or van charter! Enjoy a hassle-free journey with a personal driver, perfect for discovering your dream destinations at your own pace.
-                </p>
-            </div>
-        </div>
+    </a>
+        @endforeach
+
     </div>
 </main>
 

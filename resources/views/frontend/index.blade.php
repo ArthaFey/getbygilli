@@ -284,7 +284,8 @@
       </div>
   
       <div class="row g-4">
-        <!-- Review Card 1 -->
+
+        @foreach ($review as $item )
         <div class="col-md-4 animate__animated animate__fadeInUp animate__delay-1s">
           <div class="review-card bg-white rounded-lg shadow-lg p-6 h-100 transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-xl hover:border-t-4 hover:border-red-500">
             <p class="text-gray-700 mb-4">
@@ -312,64 +313,9 @@
             </p>
           </div>
         </div>
-  
-        <!-- Review Card 2 -->
-        <div class="col-md-4 animate__animated animate__fadeInUp animate__delay-2s">
-          <div class="review-card bg-white rounded-lg shadow-lg p-6 h-100 transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-xl hover:border-t-4 hover:border-blue-500">
-            <p class="text-gray-700 mb-4">
-              "Pelayanan yang diberikan sangat memuaskan dan ramah."
-            </p>
-            <div class="d-flex align-items-center mb-4">
-              <img alt="Portrait of Smith" class="rounded-full me-3" width="50" height="50" src="https://storage.googleapis.com/a1aa/image/IwfX0I_mjRft1FlKrZ8bwoxxeY1cA6X4vS4GGVxXoto.jpg">
-              <div>
-                <p class="text-gray-800 fw-semibold mb-0">Smith</p>
-                <p class="text-gray-500 mb-0">Traveller</p>
-              </div>
-            </div>
-            <div class="d-flex align-items-center mb-4">
-              <div class="text-warning me-2">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-              </div>
-              <p class="text-gray-600 mb-0">5.0</p>
-            </div>
-            <p class="text-gray-500 text-sm mb-0">
-              Diunggah pada 5 Februari 2023
-            </p>
-          </div>
-        </div>
-  
-        <!-- Review Card 3 -->
-        <div class="col-md-4 animate__animated animate__fadeInUp animate__delay-3s">
-          <div class="review-card bg-white rounded-lg shadow-lg p-6 h-100 transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-xl hover:border-t-4 hover:border-green-500">
-            <p class="text-gray-700 mb-4">
-              "Pengalaman liburan bersama keluarga menjadi lebih berkesan."
-            </p>
-            <div class="d-flex align-items-center mb-4">
-              <img alt="Portrait of Samantha Family" class="rounded-full me-3" width="50" height="50" src="https://storage.googleapis.com/a1aa/image/fuW9DplULikcC0L-EAx1eIBb306LaBmAF51K1Wulylo.jpg">
-              <div>
-                <p class="text-gray-800 fw-semibold mb-0">Samantha Family</p>
-                <p class="text-gray-500 mb-0">Ibu Rumah Tangga</p>
-              </div>
-            </div>
-            <div class="d-flex align-items-center mb-4">
-              <div class="text-warning me-2">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-              </div>
-              <p class="text-gray-600 mb-0">5.0</p>
-            </div>
-            <p class="text-gray-500 text-sm mb-0">
-              Diunggah pada 20 Maret 2023
-            </p>
-          </div>
-        </div>
+        @endforeach
+
+
       </div>
     </div>
   </section>
