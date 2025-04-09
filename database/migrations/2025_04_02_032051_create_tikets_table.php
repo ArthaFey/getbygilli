@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('perusahaan_id');
             $table->string('category_id');
+            $table->string('foto');
             $table->string('judul_tiket');
+            $table->date('tanggal_keberangkatan');
             $table->string('slug')->unique();
             $table->integer('harga_dewasa');
             $table->integer('harga_anak_anak');

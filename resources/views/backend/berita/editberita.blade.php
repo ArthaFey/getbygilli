@@ -85,7 +85,7 @@
 
         <div class="mb-3">
             <label for="content" class="form-label">Content Berita</label>
-            <textarea class="form-control" name="content" id="content">{{ old('content', $data->excerpt) }}</textarea>
+            <textarea class="form-control" name="content" id="content">{{ old('content', $data->content) }}</textarea>
         </div>
 
         <div class="mb-3">

@@ -68,10 +68,36 @@
                         <input type="hidden" name="perusahaan_id" value="{{ old('perusahaan_id',$tiket->perusahaan_id) }}" id="">
 
                         <div class="mb-3">
+                            <label for="image" class="form-label">Foto</label>
+                            <input type="file" id="image" name="foto" class="form-control @error('foto') is-invalid @enderror">
+                            <div class="image-preview" id="thumbnailInput">
+                                
+                                @if($tiket->foto)
+                                <img src="{{ asset('foto/' . $tiket->foto) }}" alt="Old Image Preview" id="previewImage" style="display: block;">
+                                @else
+                                <img src="#" alt="Image Preview" id="previewImage" style="display: none;">
+                                <span class="preview-text" id="previewText">No image selected</span>
+                                @endif
+
+                            </div>
+                            @error('foto')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+
+                        <div class="mb-3">
                             <label for="title" class="col-sm-2 col-form-label">Judul Tiket</label>
                             <input type="text" class="form-control" name="judul_tiket" value="{{ old('judul_tiket',$tiket->judul_tiket) }}" id="judul_tiket">
                             
                             <input type="hidden" name="slug" id="slug">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">Tanggal Keberangkatan</label>
+                            <input type="date" class="form-control" name="tanggal_keberangkatan" value="{{ old('tanggal_keberangkatan',$tiket->tanggal_keberangkatan) }}" id="">
                         </div>
                       
                         <div class="mb-3">

@@ -20,6 +20,9 @@ use App\Http\Controllers\BeritaController;
 
 // ## HOME ## //
 Route::get('/',[HomeController::class,'home'])->name('home');
+Route::get('/category-all/{slug}',[HomeController::class,'category_all'])->name('category.all');
+Route::get('/detail-berita/{id}',[HomeController::class,'detail_berita'])->name('detail.berita');
+
 
 
 

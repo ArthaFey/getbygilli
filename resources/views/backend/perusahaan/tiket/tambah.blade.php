@@ -67,10 +67,30 @@
                         <input type="hidden" name="perusahaan_id" value="{{ $perusahaan->id }}" id="">
 
                         <div class="mb-3">
+                            <label for="image" class="form-label">Foto</label>
+                            <input type="file" id="image" name="foto" class="form-control @error('foto') is-invalid @enderror">
+                            <div class="image-preview" id="thumbnailInput">
+                                <img src="#" alt="Image Preview" id="previewImage" style="display: none;">
+                                <span class="preview-text" id="previewText">No image selected</span>
+                            </div>
+                            @error('foto')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+
+                        <div class="mb-3">
                             <label for="title" class="col-sm-2 col-form-label">Judul Tiket</label>
                             <input type="text" class="form-control" name="judul_tiket" value="{{ old('judul_tiket') }}" id="judul_tiket">
                             
                             <input type="hidden" name="slug" id="slug">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">Tanggal Keberangkatan</label>
+                            <input type="date" class="form-control" name="tanggal_keberangkatan" value="{{ old('tanggal_keberangkatan') }}" id="">
                         </div>
                       
                         <div class="mb-3">

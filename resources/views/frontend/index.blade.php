@@ -1,17 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Travel Website - Boat GiliWanders</title>
      <!-- Favicon Links -->
-    <link rel="icon" href="assets/gili-logo.png" type="image/png">
+    <link rel="icon" href="../assets/gili-logo.png" type="image/png">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../css/home.css">
+<style>
+    .rotate-90 {
+    transform: rotate(90deg); /* Rotasi 90 derajat untuk membuat ikon vertikal */
+}
+
+</style>
+
+@php
+    use Carbon\carbon;
+    Carbon::setLocale('id');
+@endphp
 </head>
 
 
@@ -50,37 +61,17 @@
                     <!-- Input Penumpang -->
                     <div class="flex items-center border rounded-lg px-4 py-3 bg-white w-full md:w-1/6 h-12">
                         <div class="dropdown w-full">
-                            <button class="btn btn-light dropdown-toggle d-flex align-items-center w-full justify-content-between bg-transparent border-0 p-0" type="button" id="passengerDropdownButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-user text-gray-500 me-2"></i>
-                                <span id="passengerCount">1 Passenger</span>
-                            </button>
-                            <div class="dropdown-menu p-3" aria-labelledby="passengerDropdownButton">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <span>Adults (12+ years)</span>
-                                    <div class="d-flex align-items-center">
-                                        <button id="adultMinus" class="btn btn-outline-secondary btn-sm">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                        <span id="adultCount" class="mx-2">1</span>
-                                        <button id="adultPlus" class="btn btn-outline-secondary btn-sm">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <span>Children (2-11 years)</span>
-                                    <div class="d-flex align-items-center">
-                                        <button id="childMinus" class="btn btn-outline-secondary btn-sm">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                        <span id="childCount" class="mx-2">0</span>
-                                        <button id="childPlus" class="btn btn-outline-secondary btn-sm">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <button id="doneButton" class="btn btn-primary w-100">Done</button>
-                            </div>
+                            <select class="w-full border-none border-gray-300 rounded-lg text-sm text-center">
+                                <option value="" disabled selected hidden>1 Passenger</option>
+                                <option value="1">1 Passenger</option>
+                                <option value="2">2 Passengers</option>
+                                <option value="3">3 Passengers</option>
+                                <option value="4">4 Passengers</option>
+                                <option value="5">5 Passengers</option>
+                                <option value="6">6 Passengers</option>
+                                <option value="7">7 Passengers</option>
+                                <option value="8">8 Passengers</option>
+                            </select>
                         </div>
                     </div>
                     <!-- Tombol Menuju Book Info -->
@@ -120,9 +111,8 @@
                     <input type="text" class="border focus:ring-0 text-center text-sm flex-grow bg-transparent h-full w-full max-w-xs text-center p-3 rounded-lg" placeholder="Enter Departure">
                     
                     <!-- Vertical Swap Button with arrows side by side -->
-                    <button type="button" id="swapButton" class="flex items-center justify-center my-1 p-2 text-gray-500 hover:text-gray-700">
-                        <i class="fas fa-arrow-up mr-2"></i>
-                        <i class="fas fa-arrow-down"></i>
+                    <button type="button" id="swapBtn" class="flex-shrink-0 px-2">
+                        <i class="fas fa-right-left text-lg text-gray-600 rotate-90"></i>
                     </button>
                     
                     <!-- Destination Select -->
@@ -166,10 +156,43 @@
     </div>
 </header>
 
+
+<!-- Category Start -->
 <section class="popular-destinations py-8 bg-gray-50">
     <div class="container mx-auto px-4">
+        <span class="section__subtitle block text-sm text-red-600 animate__animated animate__fadeIn">Our Category</span>
         <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 animate__animated animate__fadeIn">
             <h2 class="text-3xl font-bold">Category</h2>
+        </div>
+
+        <div id="destinationsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            <!-- Popular Destinations (Visible by default) -->
+            <!-- Destination Card 1 - Bali -->
+            @foreach ($category as $item )
+            <a href="{{ route('category.all',$item->slug) }}">
+            <div class="destination-card bg-white shadow-md rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 animate__animated animate__fadeInUp" data-island="bali" data-popular="true">
+                <img alt="" class="w-full h-48 object-cover aspect-video" src="{{ asset('foto/' . $item->foto) }}" />
+                <div class="p-4">
+                    <div class=" text-center">
+                        <h3 class="text-lg font-semibold ">{{ $item->name }}</h3>
+                    </div>                   
+                </div>
+            </div>
+        </a>
+            @endforeach
+            
+           
+        </div>
+    </div>
+</section> 
+<!-- Category End -->
+
+<!-- Tiket Start -->
+<section class="popular-destinations py-8 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <span class="section__subtitle block text-sm text-red-600 animate__animated animate__fadeIn">Our Visit</span>
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 animate__animated animate__fadeIn">
+            <h2 class="text-3xl font-bold">Explore Beautiful Destinations</h2>
             <div class="flex items-center mt-4 md:mt-0 space-x-4">
             
                 <a href="#" id="viewAllBtn" class="text-sm font-medium text-red-600 hover:text-red-700 flex items-center animate__animated animate__fadeIn">
@@ -182,429 +205,77 @@
         </div>
 
         <div id="destinationsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-            <!-- Popular Destinations (Visible by default) -->
-            <!-- Destination Card 1 - Bali -->
-            <div class="destination-card bg-white shadow-md rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 animate__animated animate__fadeInUp" data-island="bali" data-popular="true">
-                <img alt="Image of Bali & Nusa Penida" class="w-full h-48 object-cover aspect-video" src="https://storage.googleapis.com/a1aa/image/e9VeBNq96RwRkdGyS0niBMY7WVZkEL_CMIeWwV71_oE.jpg" />
-                <div class="p-4">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-lg font-semibold">Bali & Nusa Penida</h3>
-                        <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium">Popular</span>
-                    </div>
-                    <p class="text-sm text-gray-500 mt-1">Apr 8 - Recent</p>
-                    <span class="text-sm font-medium text-red-600">Ubud → Nusa Penida</span>
-                    <div class="mt-2">
-                        <span class="text-sm font-semibold text-gray-500">IDR 300,000</span>
-                    </div>                    
-                </div>
-            </div>
-            
-            <!-- Destination Card 2 - Lombok -->
-            <div class="destination-card bg-white shadow-md rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 animate__animated animate__fadeInUp" data-island="lombok" data-popular="true">
-                <img alt="Image of Lombok & Pink Beach" class="w-full h-48 object-cover aspect-video" src="https://storage.googleapis.com/a1aa/image/_P3nK1TDUhzn27yqaiMC-gxnyuCJNQn0Q_xioXLc6OA.jpg" />
-                <div class="p-4">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-lg font-semibold">Lombok & Pink Beach</h3>
-                        <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium">Popular</span>
-                    </div>
-                    <p class="text-sm text-gray-500 mt-1">Apr 9 - Recent</p>
-                    <span class="text-sm font-medium text-red-600">Lombok → Pink Beach</span>
-                    <div class="mt-2">
-                        <span class="text-sm font-semibold text-gray-500">IDR 350,000</span>
-                    </div>                    
-                </div>
-            </div>
-            
-            <!-- Destination Card 3 - Jawa -->
-            <div class="destination-card bg-white shadow-md rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 animate__animated animate__fadeInUp" data-island="jawa" data-popular="true">
-                <img alt="Image of Jawa & Bromo" class="w-full h-48 object-cover aspect-video" src="assets/Bromo Java.jpg" />
-                <div class="p-4">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-lg font-semibold">Java Island & Bromo</h3>
-                        <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium">Popular</span>
-                    </div>
-                    <p class="text-sm text-gray-500 mt-1">Apr 10 - Recent</p>
-                    <span class="text-sm font-medium text-red-600">Surabaya → Mount Bromo</span>
-                    <div class="mt-2">
-                        <span class="text-sm font-semibold text-gray-500">IDR 350,000</span>
-                    </div>                    
-                </div>
-            </div>
-            
-            <!-- Destination Card 4 - NTT -->
-            <div class="destination-card bg-white shadow-md rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 animate__animated animate__fadeInUp" data-island="ntt" data-popular="true">
-                <img alt="Image of Nusa Tenggara Timur & Komodo Island" class="w-full h-48 object-cover aspect-video" src="https://storage.googleapis.com/a1aa/image/ITTGXVvOKuDuyKd5svdUXWbxpRY3kdceJGN04UQ2MTA.jpg" />
-                <div class="p-4">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-lg font-semibold">NTT & Komodo Island</h3>
-                        <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium">Popular</span>
-                    </div>
-                    <p class="text-sm text-gray-500 mt-1">Apr 10 - Recent</p>
-                    <span class="text-sm font-medium text-red-600">Lombok → Komodo Island</span>
-                    <div class="mt-2">
-                        <span class="text-sm font-semibold text-gray-500">IDR 750,000</span>
-                    </div>                    
-                </div>
-            </div>
-            
-            
     
-        </div>
-    </div>
-</section> 
-
-
-<section class="popular-destinations py-8 bg-gray-50">
-    <div class="container mx-auto px-4">
-        <span class="section__subtitle block text-sm text-red-600 animate__animated animate__fadeIn">Our Visit</span>
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 animate__animated animate__fadeIn">
-            <h2 class="text-3xl font-bold">Explore Beautiful Destinations</h2>
-        </div>
-
-        <!-- Island Selection (Hidden by default) -->
-        <div id="islandSelection" class="mb-6 hidden animate__animated">
-            <h3 class="text-sm font-medium mb-2 text-gray-700">Select an Island</h3>
-            <div class="flex flex-wrap gap-2">
-                <button data-island="popular" class="px-4 py-2 bg-white border border-gray-300 rounded-full text-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 island-filter active">Popular</button>
-                <button data-island="bali" class="px-4 py-2 bg-white border border-gray-300 rounded-full text-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 island-filter">Bali</button>
-                <button data-island="jawa" class="px-4 py-2 bg-white border border-gray-300 rounded-full text-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 island-filter">Jawa</button>
-                <button data-island="lombok" class="px-4 py-2 bg-white border border-gray-300 rounded-full text-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 island-filter">Lombok</button>
-                <button data-island="sulawesi" class="px-4 py-2 bg-white border border-gray-300 rounded-full text-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 island-filter">Sulawesi</button>
-                <button data-island="kalimantan" class="px-4 py-2 bg-white border border-gray-300 rounded-full text-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 island-filter">Kalimantan</button>
-                <button data-island="ntt" class="px-4 py-2 bg-white border border-gray-300 rounded-full text-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 island-filter">Nusa Tenggara Timur</button>
-            </div>
-        </div>
-
-        <div id="destinationsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-            <!-- Popular Destinations (Visible by default) -->
-            <!-- Destination Card 1 - Bali -->
+            @foreach($tiket as $item)
             <div class="destination-card bg-white shadow-md rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 animate__animated animate__fadeInUp" data-island="bali" data-popular="true">
-                <img alt="Image of Bali & Nusa Penida" class="w-full h-48 object-cover aspect-video" src="https://storage.googleapis.com/a1aa/image/e9VeBNq96RwRkdGyS0niBMY7WVZkEL_CMIeWwV71_oE.jpg" />
+                <img alt="Image of Bali & Nusa Penida" class="w-full h-48 object-cover aspect-video" src="{{ asset('foto/' . $item->foto) }}" />
                 <div class="p-4">
                     <div class="flex justify-between items-center">
-                        <h3 class="text-lg font-semibold">Bali & Nusa Penida</h3>
+                        <h3 class="text-lg font-semibold">{{ $item->judul_tiket }}</h3>
                         <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium">Popular</span>
                     </div>
-                    <p class="text-sm text-gray-500 mt-1">Apr 8 - Recent</p>
-                    <span class="text-sm font-medium text-red-600">Ubud → Nusa Penida</span>
+                    <p class="text-sm text-gray-500 mt-1">{{ Carbon::parse($item->tanggal_keberangkatan)->isoFormat('D MMM Y') }} - Recent</p>
                     <div class="mt-2">
-                        <span class="text-sm font-semibold text-gray-500">IDR 300,000</span>
+                        <span class="text-sm font-semibold text-gray-500 text-red-600">IDR{{ number_format($item->harga_dewasa,0,) }}</span>
                     </div>                    
                 </div>
             </div>
-            
-            <!-- Destination Card 2 - Lombok -->
-            <div class="destination-card bg-white shadow-md rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 animate__animated animate__fadeInUp" data-island="lombok" data-popular="true">
-                <img alt="Image of Lombok & Pink Beach" class="w-full h-48 object-cover aspect-video" src="https://storage.googleapis.com/a1aa/image/_P3nK1TDUhzn27yqaiMC-gxnyuCJNQn0Q_xioXLc6OA.jpg" />
-                <div class="p-4">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-lg font-semibold">Lombok & Pink Beach</h3>
-                        <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium">Popular</span>
-                    </div>
-                    <p class="text-sm text-gray-500 mt-1">Apr 9 - Recent</p>
-                    <span class="text-sm font-medium text-red-600">Lombok → Pink Beach</span>
-                    <div class="mt-2">
-                        <span class="text-sm font-semibold text-gray-500">IDR 350,000</span>
-                    </div>                    
-                </div>
-            </div>
-            
-            <!-- Destination Card 3 - Jawa -->
-            <div class="destination-card bg-white shadow-md rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 animate__animated animate__fadeInUp" data-island="jawa" data-popular="true">
-                <img alt="Image of Jawa & Bromo" class="w-full h-48 object-cover aspect-video" src="assets/Bromo Java.jpg" />
-                <div class="p-4">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-lg font-semibold">Java Island & Bromo</h3>
-                        <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium">Popular</span>
-                    </div>
-                    <p class="text-sm text-gray-500 mt-1">Apr 10 - Recent</p>
-                    <span class="text-sm font-medium text-red-600">Surabaya → Mount Bromo</span>
-                    <div class="mt-2">
-                        <span class="text-sm font-semibold text-gray-500">IDR 350,000</span>
-                    </div>                    
-                </div>
-            </div>
-            
-            <!-- Destination Card 4 - NTT -->
-            <div class="destination-card bg-white shadow-md rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 animate__animated animate__fadeInUp" data-island="ntt" data-popular="true">
-                <img alt="Image of Nusa Tenggara Timur & Komodo Island" class="w-full h-48 object-cover aspect-video" src="https://storage.googleapis.com/a1aa/image/ITTGXVvOKuDuyKd5svdUXWbxpRY3kdceJGN04UQ2MTA.jpg" />
-                <div class="p-4">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-lg font-semibold">NTT & Komodo Island</h3>
-                        <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium">Popular</span>
-                    </div>
-                    <p class="text-sm text-gray-500 mt-1">Apr 10 - Recent</p>
-                    <span class="text-sm font-medium text-red-600">Lombok → Komodo Island</span>
-                    <div class="mt-2">
-                        <span class="text-sm font-semibold text-gray-500">IDR 750,000</span>
-                    </div>                    
-                </div>
-            </div>
+            @endforeach
+        
             
             
-            <!-- Additional Destinations (Hidden by default) -->
-            <!-- Additional Bali Destination -->
-            <div class="destination-card bg-white shadow-md rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 animate__animated animate__fadeInUp hidden" data-island="bali">
-                <img alt="Image of Ubud" class="w-full h-48 object-cover" 
-                     src="assets/Ubud Cultural.jpg" />
-                <div class="p-4">
-                    <h3 class="text-lg font-semibold mb-1">Ubud Cultural Experience</h3>
-                    <p class="text-sm text-gray-500 mb-2">Apr 11 - Recent</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm font-medium text-red-600">Ubud → Tegallalang</span>
-                    </div>
-                    <div class="mt-2">
-                        <span class="text-sm font-semibold text-gray-500">IDR 350,000</span>
-                    </div>                    
-                </div>
-            </div>
-            <div class="destination-card bg-white shadow-md rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 animate__animated animate__fadeInUp hidden" data-island="bali">
-                <img alt="Image of Ubud" class="w-full h-48 object-cover" 
-                     src="assets/Ubud Cultural.jpg" />
-                <div class="p-4">
-                    <h3 class="text-lg font-semibold mb-1">Bali & Lombok</h3>
-                    <p class="text-sm text-gray-500 mb-2">Apr 11 - Recent</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm font-medium text-red-600">Kuta Hotel Transfer → Senggigi Pier</span>
-                    </div>
-                    <div class="mt-2">
-                        <span class="text-sm font-semibold text-gray-500">IDR 1,150,000</span>
-                    </div>                    
-                </div>
-            </div>
 
-            
-            
-            <!-- Additional Jawa Destination -->
-            <div class="destination-card bg-white shadow-md rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 animate__animated animate__fadeInUp hidden" data-island="jawa">
-                <img alt="Image of Yogyakarta" class="w-full h-48 object-cover" 
-                     src="assets/Yogyakarta Heritage Tour.jpg" />
-                <div class="p-4">
-                    <h3 class="text-lg font-semibold mb-1">Yogyakarta Heritage Tour</h3>
-                    <p class="text-sm text-gray-500 mb-2">Apr 12 - Recent</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm font-medium text-red-600">Yogyakarta → Prambanan</span>
-                    </div>
-                    <div class="mt-2">
-                        <span class="text-sm font-semibold text-gray-500">IDR 450,000</span>
-                    </div>                    
-                </div>
-            </div>
-            
-            <!-- Additional Lombok Destination -->
-            <div class="destination-card bg-white shadow-md rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 animate__animated animate__fadeInUp hidden" data-island="lombok">
-                <img alt="Image of Mount Rinjani" class="w-full h-48 object-cover" 
-                     src="assets/Mount Rinjani Trekking.jpg" />
-                <div class="p-4">
-                    <h3 class="text-lg font-semibold mb-1">Mount Rinjani Trekking</h3>
-                    <p class="text-sm text-gray-500 mb-2">Apr 13 - Recent</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm font-medium text-red-600">Sembalun → Rinjani Summit</span>
-                    </div>
-                    <div class="mt-2">
-                        <span class="text-sm font-semibold text-gray-500">IDR 300,000</span>
-                    </div>                    
-                </div>
-            </div>
-            
-            <!-- Additional Sulawesi Destination -->
-            <div class="destination-card bg-white shadow-md rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 animate__animated animate__fadeInUp hidden" data-island="sulawesi">
-                <img alt="Image of Tana Toraja" class="w-full h-48 object-cover" 
-                     src="assets/Tana Toraja Culture.jpg" />
-                <div class="p-4">
-                    <h3 class="text-lg font-semibold mb-1">Tana Toraja Culture</h3>
-                    <p class="text-sm text-gray-500 mb-2">Apr 14 - Recent</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm font-medium text-red-600">Makassar → Tana Toraja</span>
-                    </div>
-                    <div class="mt-2">
-                        <span class="text-sm font-semibold text-gray-500">IDR 450,000</span>
-                    </div>                    
-                </div>
-            </div>
-            
-            <!-- Additional Kalimantan Destination -->
-            <div class="destination-card bg-white shadow-md rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 animate__animated animate__fadeInUp hidden" data-island="kalimantan">
-                <img alt="Image of Derawan Islands" class="w-full h-48 object-cover" 
-                     src="assets/Derawan Island.jpg" />
-                <div class="p-4">
-                    <h3 class="text-lg font-semibold mb-1">Derawan Island Paradise</h3>
-                    <p class="text-sm text-gray-500 mb-2">Apr 15 - Recent</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm font-medium text-red-600">Balikpapan → Derawan</span>
-                    </div>
-                    <div class="mt-2">
-                        <span class="text-sm font-semibold text-gray-500">IDR 550,000</span>
-                    </div>                    
-                </div>
-            </div>
-            
-            <!-- Additional NTT Destination -->
-            <div class="destination-card bg-white shadow-md rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 animate__animated animate__fadeInUp hidden" data-island="ntt">
-                <img alt="Image of Flores" class="w-full h-48 object-cover" 
-                     src="assets/Flores Tour.jpg" />
-                <div class="p-4">
-                    <h3 class="text-lg font-semibold mb-1">Flores Overland Tour</h3>
-                    <p class="text-sm text-gray-500 mb-2">Apr 16 - Recent</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm font-medium text-red-600">Labuan Bajo → Ruteng</span>
-                    </div>
-                    <div class="mt-2">
-                        <span class="text-sm font-semibold text-gray-500">IDR 750,000</span>
-                    </div>                    
-                </div>
-            </div>
-        </div>
     </div>
 </section> 
+<!-- Tiket End -->
 
-<section class="where-to-go py-12">
-    <div class="where-to-go__container container scroll-animate" data-animation="fadeInUp" data-delay="0.2s"">
-        <span class="section__subtitle block text-center text-red-600 animate__animated animate__fadeIn">Our Trip</span>
-        <h2 class="section__title text-3xl font-bold text-center mt-2 animate__animated animate__fadeIn">Where to Go</h2>
-        
-        <!-- Scroll horizontal -->
-        <div class="where-to-go__content mt-8 overflow-x-auto whitespace-nowrap pb-4">
-            <div class="inline-flex gap-4 w-max px-4">
-                
-                <!-- Card 1 -->
-                <section class="where-to-go__card bg-white shadow-lg rounded-lg overflow-hidden animate__animated animate__fadeInUp w-64 inline-block align-top whitespace-normal">
-                    <div class="bg-white shadow-lg rounded-lg overflow-hidden transition-transform duration-300 ease-in-out transform hover:-translate-y-2">
-                        <img alt="Image of Labuan Bajo & Komodo Island" class="w-full h-48 object-cover" src="https://storage.googleapis.com/a1aa/image/ITTGXVvOKuDuyKd5svdUXWbxpRY3kdceJGN04UQ2MTA.jpg">
-                        <div class="p-4">
-                            <h3 class="text-base font-bold">Pantai Sanur → Nusa Penida</h3>
-                            <p class="text-sm text-gray-600">From IDR 300,000</p>
-                        </div>
+
+<!-- News Start -->
+<section class="blog py-12">
+    <div class="blog__container container">
+        <span class="section__subtitle block text-center text-red-600 animate__animated animate__fadeIn">Our Blog & News</span>
+        <h2 class="section__title text-3xl font-bold text-center mt-2 animate__animated animate__fadeIn">The Best Trip For You</h2>
+        <div class="blog__content grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+            
+
+            @foreach($berita as $item)
+            <article class="blog__card bg-white shadow-lg rounded-lg overflow-hidden animate__animated animate__fadeInUp">
+                <div class="blog__image relative">
+                    <img src="{{ asset('fotoberita/' . $item->image) }}" alt="" class="blog__img w-full h-48 object-cover">
+                 
+                </div>
+                <div class="blog__data p-4">
+                    <div class="flex items-center text-gray-500 mb-2">
+                        <i class="fas fa-calendar-alt text-gray-500 mr-2"></i>
+                        <span>{{ Carbon::parse($item->date)->isoFormat('D MMMM Y') }}</span>
                     </div>
-                </section>
-
-                <!-- Card 2 -->
-                <section class="where-to-go__card bg-white shadow-lg rounded-lg overflow-hidden animate__animated animate__fadeInUp w-64 inline-block align-top whitespace-normal">
-                    <div class="bg-white shadow-lg rounded-lg overflow-hidden transition-transform duration-300 ease-in-out transform hover:-translate-y-2">
-                        <img alt="Image of Raja Ampat & Wayag Island" class="w-full h-48 object-cover" src="https://storage.googleapis.com/a1aa/image/ITTGXVvOKuDuyKd5svdUXWbxpRY3kdceJGN04UQ2MTA.jpg">
-                        <div class="p-4">
-                            <h3 class="text-base font-bold">Benoa square jimbaran → Senggigi Beach</h3>
-                            <p class="text-sm text-gray-600">From IDR 700,000</p>
-                        </div>
+                    <h2 class="blog__title text-xl font-bold">{{ $item->title }}</h2>
+                    <p class="blog__description text-gray-600 mt-2">{{ $item->excerpt }}</p>
+                    <div class="blog__footer flex n mt-4">
+                        <a href="blog-gw.html">
+                            <a href="{{ route('detail.berita',$item->id) }}" class="border border-blue-600 text-blue-600 px-6 py-2 rounded-full font-medium hover:bg-blue-100 transition duration-300">
+                                PREVIEW
+                            </a>
+                        </a>                                                                                              
+                        {{-- <div class="flex items-center text-gray-500">
+                            <i class="bx bx-show mr-1"></i>
+                            <span>76,5k</span>
+                        </div> --}}
                     </div>
-                </section>
+                </div>
+            </article>
+            @endforeach
 
-                <!-- Card 3 -->
-                <section class="where-to-go__card bg-white shadow-lg rounded-lg overflow-hidden animate__animated animate__fadeInUp w-64 inline-block align-top whitespace-normal">
-                    <div class="bg-white shadow-lg rounded-lg overflow-hidden transition-transform duration-300 ease-in-out transform hover:-translate-y-2">
-                        <img alt="Image of Yogyakarta & Borobudur Temple" class="w-full h-48 object-cover" src="https://storage.googleapis.com/a1aa/image/ITTGXVvOKuDuyKd5svdUXWbxpRY3kdceJGN04UQ2MTA.jpg">
-                        <div class="p-4">
-                            <h3 class="text-base font-bold">Gili Trawangan → Pink Beach</h3>
-                            <p class="text-sm text-gray-600">From IDR 500,000</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Card 4 -->
-                <section class="where-to-go__card bg-white shadow-lg rounded-lg overflow-hidden animate__animated animate__fadeInUp w-64 inline-block align-top whitespace-normal">
-                    <div class="bg-white shadow-lg rounded-lg overflow-hidden transition-transform duration-300 ease-in-out transform hover:-translate-y-2">
-                        <img alt="Image of Denpasar & Mount Batur" class="w-full h-48 object-cover" src="https://storage.googleapis.com/a1aa/image/ITTGXVvOKuDuyKd5svdUXWbxpRY3kdceJGN04UQ2MTA.jpg">
-                        <div class="p-4">
-                            <h3 class="text-base font-bold">Lombok → Komodo Island</h3>
-                            <p class="text-sm text-gray-600">From IDR 1,000,000</p>
-                        </div>
-                    </div>
-                </section>
-
-            </div>
         </div>
     </div>
 </section>
+<!-- News End -->
 
 
-        <section class="blog py-12">
-            <div class="blog__container container">
-                <span class="section__subtitle block text-center text-red-600 animate__animated animate__fadeIn">Our Blog & News</span>
-                <h2 class="section__title text-3xl font-bold text-center mt-2 animate__animated animate__fadeIn">The Best Trip For You</h2>
-                <div class="blog__content grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-                    <!-- Blog Card 1 -->
-                    <article class="blog__card bg-white shadow-lg rounded-lg overflow-hidden animate__animated animate__fadeInUp">
-                        <div class="blog__image relative">
-                            <img src="assets/Background Header.jpg" alt="" class="blog__img w-full h-48 object-cover">
-                            <a href="#" class="blog__button absolute bottom-4 right-4 bg-blue-600 text-white p-2 rounded-full"><i class="bx bx-right-arrow-alt"></i></a>
-                        </div>
-                        <div class="blog__data p-4">
-                            <div class="flex items-center text-gray-500 mb-2">
-                                <i class="fas fa-calendar-alt text-gray-500 mr-2"></i>
-                                <span>March 17, 2025</span>
-                            </div>
-                            <h2 class="blog__title text-xl font-bold">🚤 Luxury Catamaran Cruise to Nusa Penida & Nusa Lembongan – A VIP Ocean Escape</h2>
-                            <p class="blog__description text-gray-600 mt-2">Set sail on a luxurious catamaran and cruise across the turquoise waters of Bali. This exclusive experience offers a seamless blend of adventure, relaxation, and breathtaking scenery, making it a must-do for travelers seeking a premium island-hopping getaway...</p>
-                            <div class="blog__footer flex justify-between mt-4">
-                                <a href="blog-gw.html">
-                                    <button class="border border-blue-600 text-blue-600 px-6 py-2 rounded-full font-medium hover:bg-blue-100 transition duration-300">
-                                        PREVIEW
-                                    </button>
-                                </a>                                                                                              
-                                <div class="flex items-center text-gray-500">
-                                    <i class="bx bx-show mr-1"></i>
-                                    <span>76,5k</span>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-        
-                    <!-- Blog Card 2 -->
-                    <article class="blog__card bg-white shadow-lg rounded-lg overflow-hidden animate__animated animate__fadeInUp">
-                        <div class="blog__image relative">
-                            <img src="assets/Background Header.jpg" alt="" class="blog__img w-full h-48 object-cover">
-                            <a href="#" class="blog__button absolute bottom-4 right-4 bg-blue-600 text-white p-2 rounded-full"><i class="bx bx-right-arrow-alt"></i></a>
-                        </div>
-                        <div class="blog__data p-4">
-                            <div class="flex items-center text-gray-500 mb-2">
-                                <i class="fas fa-calendar-alt text-gray-500 mr-2"></i>
-                                <span>March 19, 2025</span>
-                            </div>
-                            <h2 class="blog__title text-xl font-bold">🚤 Private Speedboat to the Gili Islands – Escape to Paradise</h2>
-                            <p class="blog__description text-gray-600 mt-2">Want to avoid the crowds and enjoy a private escape to Gili Trawangan, Gili Meno, and Gili Air? Hop on a high-speed private boat and reach these islands in style.</p>
-                            <div class="blog__footer flex justify-between mt-4">
-                                <button class="border border-blue-600 text-blue-600 px-6 py-2 rounded-full font-medium hover:bg-blue-100 transition duration-300">
-                                    PREVIEW
-                                </button>
-                                                                                                
-                                <div class="flex items-center text-gray-500">
-                                    <i class="bx bx-show mr-1"></i>
-                                    <span>76,5k</span>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-        
-                    <!-- Blog Card 3 -->
-                    <article class="blog__card bg-white shadow-lg rounded-lg overflow-hidden animate__animated animate__fadeInUp">
-                        <div class="blog__image relative">
-                            <img src="assets/Background Header.jpg" alt="" class="blog__img w-full h-48 object-cover">
-                            <a href="#" class="blog__button absolute bottom-4 right-4 bg-blue-600 text-white p-2 rounded-full"><i class="bx bx-right-arrow-alt"></i></a>
-                        </div>
-                        <div class="blog__data p-4">
-                            <div class="flex items-center text-gray-500 mb-2">
-                                <i class="fas fa-calendar-alt text-gray-500 mr-2"></i>
-                                <span>March 21, 2025</span>
-                            </div>
-                            <h2 class="blog__title text-xl font-bold">🏝 Komodo Island Liveaboard – Sail with the Dragons!</h2>
-                            <p class="blog__description text-gray-600 mt-2">Venture beyond Bali and embark on a multi-day liveaboard cruise to the legendary Komodo National Park. This once-in-a-lifetime journey combines adventure, wildlife encounters, and stunning landscapes.</p>
-                            <div class="blog__footer flex justify-between mt-4">
-                                <button class="border border-blue-600 text-blue-600 px-6 py-2 rounded-full font-medium hover:bg-blue-100 transition duration-300">
-                                    PREVIEW
-                                </button>
-                                                                
-                                <div class="flex items-center text-gray-500">
-                                    <i class="bx bx-show mr-1"></i>
-                                    <span>76,5k</span>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
 
-        <!-- Reviews Section -->
+
+
+<!-- Reviews Start -->
 <section class="reviews py-12">
     <div class="container">
       <div class="text-center mb-12 animate__animated animate__fadeIn">
@@ -702,6 +373,8 @@
       </div>
     </div>
   </section>
+<!-- Reviews Start -->
+
 
     <!-- Footer -->
     <footer class="bg-red-800 text-white py-12 mt-6 animate__animated animate__fadeInUp animate__delay-1.9s">

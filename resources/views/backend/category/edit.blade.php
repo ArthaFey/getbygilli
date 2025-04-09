@@ -114,6 +114,8 @@
 
 </script>
 
+
+
 <script>
     // Image preview handling
     document.getElementById("image").addEventListener("change", function () {
@@ -135,5 +137,7 @@
         }
     });
 </script>
+    
+ 
     
 @endsection

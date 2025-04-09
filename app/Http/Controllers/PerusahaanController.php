@@ -27,7 +27,8 @@ class PerusahaanController extends Controller
         $perusahaan = Perusahaan::create($request->all());
 
           // Jika ada file gambar
-        if($request->hasFile('logo')){
+           // Jika ada file gambar
+           if($request->hasFile('logo')){
             // Simpan file ke folder 'file/'
             $fileName = $request->file('logo')->getClientOriginalName();
             $request->file('logo')->move('foto/', $fileName);
@@ -97,6 +98,13 @@ class PerusahaanController extends Controller
     public function insertTiket(Request $request,$id){
         $perusahan = Perusahaan::findOrFail($id);
         $tiket = Tiket::create($request->all());
+        if($request->hasFile('foto')){
+            $fileName = $request->file('foto')->getClientOriginalName();
+            $request->file('foto')->move('foto/', $fileName);
+            $tiket->logo = $fileName;
+            $tiket->save();
+        }
+
         return redirect()->route('tiket.show',$id)->with('insert','Add Data Success');
     }
 
@@ -109,6 +117,22 @@ class PerusahaanController extends Controller
     public function updateTiket(Request $request,$id){
         $tiket = Tiket::findOrFail($id);
         $data = $request->all();
+        if ($request->hasFile('foto')) {
+            // Hapus file lama jika ada
+            if ($tiket->foto) {
+                $oldFilePath = public_path('foto/' . $tiket->foto);
+                if (file_exists($oldFilePath)) {
+                    unlink($oldFilePath); // Menghapus file lama
+                }
+            }
+    
+            // Upload file baru
+            $file = $request->file('foto');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move('foto/', $filename); // Memindahkan file ke folder yang benar
+            $data['foto'] = $filename; // Menyimpan nama file baru ke dalam data
+        }
+
         $tiket->update($data);
         return redirect()->route('tiket.show',$tiket->perusahaan->id)->with('update','Update Data Success');
     }
