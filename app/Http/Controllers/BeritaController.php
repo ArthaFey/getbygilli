@@ -34,6 +34,11 @@ class BeritaController extends Controller
     public function updatedata(Request $request, $id){
         $data = Berita::find($id);
         $data->update($request->all());
+        if ($request->hasfile('image')) {
+            $request->file('image')->move('fotoberita/', $request->file('image')->getClientOriginalName() );
+            $data->image = $request->file('image')->getClientOriginalName();
+            $data->save();
+        }
         return redirect()->route('news')->with('update','Update Data Success');
     }
     public function delete($id){
