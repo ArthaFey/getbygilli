@@ -2,8 +2,6 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PerusahaanController;
-use App\Http\Controllers\TiketController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BeritaController;
 
@@ -35,7 +33,14 @@ Route::post('/updatedata/{id}',[BeritaController::class, 'updatedata'])->name('u
 Route::get('/delete/{id}',[BeritaController::class, 'delete'])->name('delete');
 
 
+
 // ## TESTIMONI ## //
+Route::get('/ulasan',[TestimoniController::class,'ulasan'])->name('ulasan');
+Route::get('/tambah_ulasan',[TestimoniController::class,'tambah_ulasan'])->name('tambah_ulasan');
+Route::post('/insertdata',[TestimoniController::class,'insertdata'])->name('insertdata');
+Route::get('/editulasan/{id}',[TestimoniController::class,'editulasan'])->name('editulasan');
+Route::post('/updateulasan/{id}',[TestimoniController::class,'updateulasan'])->name('updateulasan');
+Route::get('/delete/{id}',[TestimoniController::class,'delete'])->name('delete');
 
 
 
