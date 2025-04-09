@@ -30,6 +30,7 @@ Route::post('/updatedata/{id}',[BeritaController::class, 'updatedata'])->name('u
 Route::get('/delete/{id}',[BeritaController::class, 'delete'])->name('delete');
 
 
+
 // ## TESTIMONI ## //
 Route::get('/ulasan',[TestimoniController::class,'ulasan'])->name('ulasan');
 Route::get('/tambah_ulasan',[TestimoniController::class,'tambah_ulasan'])->name('tambah_ulasan');
