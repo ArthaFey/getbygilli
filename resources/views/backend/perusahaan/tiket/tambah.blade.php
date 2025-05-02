@@ -89,6 +89,31 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">From</label>
+                            <input type="text" class="form-control" name="from" value="{{ old('from') }}" id="from">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">To</label>
+                            <input type="text" class="form-control" name="to" value="{{ old('to') }}" id="to">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">Class</label>
+                            <input type="text" class="form-control" name="class" value="{{ old('class') }}" id="class">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">Hotline</label>
+                            <input type="text" class="form-control" name="hotline" value="{{ old('hotline') }}" id="hotline">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">Link Gmaps</label>
+                            <input type="text" class="form-control" name="gmaps" value="{{ old('gmaps') }}" id="gmaps">
+                        </div>
+
+                        <div class="mb-3">
                             <label for="title" class="col-sm-2 col-form-label">Tanggal Keberangkatan</label>
                             <input type="date" class="form-control" name="tanggal_keberangkatan" value="{{ old('tanggal_keberangkatan') }}" id="">
                         </div>
@@ -105,8 +130,13 @@
 
 
                         <div class="mb-3">
-                            <label for="title" class="col-sm-2 col-form-label">Keterangan Tiba</label>
+                            <label for="title" class="col-sm-2 col-form-label">Deskripsi Tiket</label>
                             <textarea name="keterangan_tiba" id="summernote"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">Note</label>
+                            <textarea name="note" id="summernote1"></textarea>
                         </div>
                       
                         <div class="mb-3">

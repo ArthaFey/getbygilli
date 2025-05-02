@@ -58,7 +58,7 @@
 
             <h4 class="form-title">Add Berita</h4>
             
-            <form action="/insertdata" method="post" enctype="multipart/form-data">
+            <form action="/insertdata-berita" method="post" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-3">

@@ -1,9 +1,21 @@
 @extends('backend.template-admin.index')
 @section('content')
 <div class="container">
-  <h1 class="text-center">ULASAN PENGGUNA</h1>
+  <h1 class="">ULASAN PENGGUNA</h1>
+
+  <nav class="navbar navbar-light bg-light">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      <a href="/tambah_ulasan" class="btn btn-success mb-3">Tambah </a>
+    <form class="form-inline d-flex gap-2" action="{{ route('ulasan') }}" method="get">
+      @csrf
+      <input class="form-control " type="search" name="search" value="{{ request('search') }}" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+</div>
+</nav>
+
+
   <table class="table">
-    <a href="/tambah_ulasan" class="btn btn-success mb-3">Tambah +</a>
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -23,49 +35,26 @@
         <td>
           <img src="{{ asset('fotoprofile/' . $row->foto) }}" alt="" style="width: 40px;">
         </td>
-        <td>{{ $row->ulasan }}</td>
+        <td>{!! $row->ulasan !!}</td>
         <td>{{ $row->rate }}</td>
         <td>
-          <a href="#" class="btn btn-danger delete" data-id="{{ $row->id }}">Delete</a>
+          <a href="#" class="btn btn-danger delete"  onclick="comfirmDelete('{{ route('delete.testimoni', $row->id) }}')" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"  >Delete</a>
           <a href="/editulasan/{{ $row->id }}" class="btn btn-primary">Edit</a>
         </td>
       </tr>
       @endforeach
     </tbody>
   </table>
+
+  <div class="">
+    {{ $data->links() }}
+  </div>
+  
 </div>
 
 <!-- Tambahkan ini di luar table -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script>
-  $(document).ready(function () {
-    $('.delete').click(function (e) {
-      e.preventDefault();
-      var id = $(this).data('id');
-      const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: "btn btn-success me-2",
-          cancelButton: "btn btn-danger"
-        },
-        buttonsStyling: false
-      });
 
-      swalWithBootstrapButtons.fire({
-        title: "Yakin ingin menghapus?",
-        text: "Data ini tidak bisa dikembalikan!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Ya, hapus!",
-        cancelButtonText: "Batal",
-        reverseButtons: true
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location = "/delete/" + id;
-        }
-      });
-    });
-  });
-</script>
 @endsection

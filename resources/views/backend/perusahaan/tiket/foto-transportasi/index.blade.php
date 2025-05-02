@@ -24,10 +24,6 @@
   <nav class="navbar navbar-light bg-light">
     <div class="container-fluid d-flex justify-content-between align-items-center">
     <a href="{{ route('foto.tambah',$tiket->id) }}" class="btn btn-success">Tambah</a>
-    <form class="form-inline d-flex gap-2">
-      <input class="form-control " type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
 </div>
 </nav>
 

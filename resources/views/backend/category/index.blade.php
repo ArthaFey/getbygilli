@@ -24,8 +24,9 @@
   <nav class="navbar navbar-light bg-light">
     <div class="container-fluid d-flex justify-content-between align-items-center">
     <a href="{{ route('category.tambah') }}" class="btn btn-success">Tambah</a>
-    <form class="form-inline d-flex gap-2">
-      <input class="form-control " type="search" placeholder="Search" aria-label="Search">
+    <form class="form-inline d-flex gap-2" action="{{ route('category') }}" method="get">
+      @csrf
+      <input class="form-control " type="search" name="search" value="{{ request('search') }}" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
 </div>

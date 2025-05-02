@@ -4,8 +4,10 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\LoginRegisterController;
 use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\TestimoniController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,16 +26,32 @@ Route::get('/category-all/{slug}',[HomeController::class,'category_all'])->name(
 Route::get('/detail-berita/{id}',[HomeController::class,'detail_berita'])->name('detail.berita');
 
 
+Route::get('/booking-tiket/{slug}',[HomeController::class,'booking_tiket'])->name('booking.tiket');
+Route::post('/checkout-payment-tiket',[HomeController::class,'checkout_tiket'])->name('checkout.tiket');
+Route::get('/payment-checkout-tiket/{order_id}',[HomeController::class,'payment_checkout'])->name('payment.checkout');
+Route::get('/success/{order_id}',[HomeController::class,'success'])->name('payment.success');
+Route::post('/midtrans/notification', [HomeController::class, 'handleMidtransNotification']);
 
+
+Route::get('/all-tiket',[HomeController::class,'all_tiket'])->name('all.tiket');
+Route::get('/search-tiket',[HomeController::class,'search_tiket'])->name('search.tiket');
+
+
+// ## LOGIN & REGISTER ## //
+Route::get('/login',[LoginRegisterController::class,'login'])->name('login')->middleware('guest');
+Route::post('/login-proses',[LoginRegisterController::class,'proses'])->name('login.proses');
+
+
+
+Route::middleware(['auth'])->group(function(){
 
 // ## BERITA ## //
 Route::get('/news',[BeritaController::class, 'news'])->name('news');
 Route::get('/tambahdata',[BeritaController::class, 'tambahdata'])->name('tambahdata');
-Route::post('/insertdata',[BeritaController::class, 'insertdata'])->name('insertdata');
+Route::post('/insertdata-berita',[BeritaController::class, 'insertdata'])->name('insertdata.berita');
 Route::get('/tampilkandata/{id}',[BeritaController::class, 'tampilkandata'])->name('tampilkandata');
 Route::post('/updatedata/{id}',[BeritaController::class, 'updatedata'])->name('updatedata');
-Route::get('/delete/{id}',[BeritaController::class, 'delete'])->name('delete');
-
+Route::get('/delete-berita/{id}',[BeritaController::class, 'delete'])->name('delete.berita');
 
 
 // ## TESTIMONI ## //
@@ -42,7 +60,7 @@ Route::get('/tambah_ulasan',[TestimoniController::class,'tambah_ulasan'])->name(
 Route::post('/insertdata',[TestimoniController::class,'insertdata'])->name('insertdata');
 Route::get('/editulasan/{id}',[TestimoniController::class,'editulasan'])->name('editulasan');
 Route::post('/updateulasan/{id}',[TestimoniController::class,'updateulasan'])->name('updateulasan');
-Route::get('/delete/{id}',[TestimoniController::class,'delete'])->name('delete');
+Route::get('/delete-testimoni/{id}',[TestimoniController::class,'delete'])->name('delete.testimoni');
 
 
 
@@ -94,8 +112,11 @@ Route::get('/deskripsi-perjalanan-edit/{id}',[PerusahaanController::class,'editd
 Route::post('/deskripsi-perjalanan-update/{id}',[PerusahaanController::class,'updatedeskripsi'])->name('deskripsi.update');
 Route::get('/deskripsi-perjalanan-delete/{id}',[PerusahaanController::class,'deletedeskripsi'])->name('deskripsi.delete');
 
-
-
+// ## TRANSACTION ## //
+Route::get('/transaction',[TransactionController::class,'transaksi'])->name('transaksi');
+Route::get('/transaction/{id}',[TransactionController::class,'transaksiShow'])->name('transaksi.show');
+Route::get('/payment/{id}/mark-as-read', [TransactionController::class, 'markAsRead'])->name('payment.markAsRead');
+});
 
 
 

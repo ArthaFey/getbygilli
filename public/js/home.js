@@ -86,23 +86,6 @@ dropdown.hide();
 
 });
 
- // Add scroll animation
- document.addEventListener('DOMContentLoaded', function() {
-  const reviewCards = document.querySelectorAll('.review-card');
-  
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('animate__animated', 'animate__fadeInUp');
-      }
-    });
-  }, {threshold: 0.1});
-  
-  reviewCards.forEach(card => {
-    observer.observe(card);
-  });
-});
-
 document.addEventListener('DOMContentLoaded', function() {
   const viewAllBtn = document.getElementById('viewAllBtn');
   const arrowIcon = document.getElementById('arrowIcon');
@@ -250,3 +233,33 @@ document.addEventListener('DOMContentLoaded', function() {
       container.appendChild(fragment);
   });
 });
+
+// Add scroll animation
+document.addEventListener('DOMContentLoaded', function() {
+    const reviewCards = document.querySelectorAll('.review-card');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+        }
+      });
+    }, {threshold: 0.1});
+    
+    reviewCards.forEach(card => {
+      observer.observe(card);
+    });
+  });
+  
+  const swiper = new Swiper(".reviewSwiper", {
+    slidesPerView: 1,
+    spaceBetween: 30,
+    loop: true,
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  });

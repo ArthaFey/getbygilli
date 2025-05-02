@@ -1,18 +1,29 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Payment;
 use App\Models\Testimoni;
 use Illuminate\Http\Request;
 
 class TestimoniController extends Controller
 {
-    public function ulasan(){
-        $data = Testimoni::all();
-        return view('backend.testimoni.index', compact('data'));
+    public function ulasan(Request $request){
+        $search = $request->search;
+        $data = Testimoni::orderByDesc('created_at')
+        ->where('nama','like', '%' . $search . '%')
+        ->paginate(10);
+        $unread = Payment::where('is_read', false)
+                     ->where('status', 'success')
+                     ->count();
+        return view('backend.testimoni.index', compact('data','unread'));
     }
 
     public function tambah_ulasan(){
-        return view('backend.testimoni.tambahdata');
+        $unread = Payment::where('is_read', false)
+                     ->where('status', 'success')
+                     ->count();
+        return view('backend.testimoni.tambahdata',compact('unread'));
     }
 
     public function insertdata(Request $request){
@@ -25,12 +36,15 @@ class TestimoniController extends Controller
             $data->save();
         }
 
-        return redirect()->route('ulasan');
+        return redirect()->route('ulasan')->with('insert','Add Data Success');
     }
 
     public function editulasan($id){
+       $unread = Payment::where('is_read', false)
+                     ->where('status', 'success')
+                     ->count();
         $data = Testimoni::find($id);
-        return view('backend.testimoni.editulasan', compact('data')); 
+        return view('backend.testimoni.editulasan', compact('data','unread')); 
     }
 
     public function updateulasan(Request $request, $id){
@@ -55,7 +69,7 @@ class TestimoniController extends Controller
             $data->save();
         }
 
-        return redirect()->route('ulasan');
+        return redirect()->route('ulasan')->with('update','Update Data Success');
     }
 
     public function delete($id){
@@ -67,6 +81,6 @@ class TestimoniController extends Controller
         }
 
         $data->delete();
-        return redirect()->route('ulasan');
+        return redirect()->route('ulasan')->with('delete','Delete Data Success');
     }
 }

@@ -7,8 +7,19 @@
     <div class="container">
     <h1 class="">Berita</h1>
 
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid d-flex justify-content-between align-items-center">
+        <a href="/tambahdata" class="btn btn-success">Tambah</a>
+      <form class="form-inline d-flex gap-2" action="{{ route('news') }}" method="get">
+        @csrf
+        <input class="form-control " type="search" name="search" value="{{ request('search') }}" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+  </div>
+  </nav>
+
     <div class="container">
-      <a href="/tambahdata" class="btn btn-success">Tambah</a>
+      
           <div class="row">
             <table class="table">
                 <thead>
@@ -34,7 +45,7 @@
                     <td>{{ $row->hit }}</td>
                     <td>
                       <a href="/tampilkandata/{{ $row->id }}" class="btn btn-primary">Edit</a>
-                      <a href="#" onclick="comfirmDelete('/delete/{{ $row->id }}')" onclick="return confirm('Apakah Anda Yakin menghapus data Ini')"  class="btn btn-danger delete">Delete</a>
+                      <a href="#" onclick="comfirmDelete('/delete-berita/{{ $row->id }}')" onclick="return confirm('Apakah Anda Yakin menghapus data Ini')"  class="btn btn-danger delete">Delete</a>
                     </td>
                   </tr>
                   @endforeach

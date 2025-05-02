@@ -11,8 +11,7 @@
     <meta name="author" content="ColorlibHQ" />
     <meta
       name="description"
-      content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS."
-    />
+      content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS."/>
     <meta
       name="keywords"
       content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard"
@@ -25,6 +24,7 @@
       integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q="
       crossorigin="anonymous"
     />
+    <link rel="icon" href="../assets/gili-logo.png" type="image/png"> 
     <!--end::Fonts-->
     <!--begin::Third Party Plugin(OverlayScrollbars)-->
     <link
@@ -50,8 +50,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css"
       integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0="
-      crossorigin="anonymous"
-    />
+      crossorigin="anonymous"/>
     <!-- jsvectormap -->
     <link
       rel="stylesheet"
@@ -113,16 +112,16 @@
         <!--begin::Sidebar Brand-->
         <div class="sidebar-brand">
           <!--begin::Brand Link-->
-          <a href="./index.html" class="brand-link">
+          <a href="{{ route('category') }}" class="brand-link">
             <!--begin::Brand Image-->
             <img
-              src="../dist/assets/img/AdminLTELogo.png"
+              src="../assets/gili-logo.png"
               alt="AdminLTE Logo"
               class="brand-image opacity-75 shadow"
             />
             <!--end::Brand Image-->
             <!--begin::Brand Text-->
-            <span class="brand-text fw-light">AdminLTE 4</span>
+            <span class="brand-text fw-semibold">Gili Wanders</span>
             <!--end::Brand Text-->
           </a>
           <!--end::Brand Link-->
@@ -139,13 +138,6 @@
               data-accordion="false"
             >
               <li class="nav-item menu-open">
-                <a href="#" class="nav-link active">
-                  <i class="nav-icon bi bi-speedometer"></i>
-                  <p>
-                    Dashboard
-                    <i class="nav-arrow bi bi-chevron-right"></i>
-                  </p>
-                </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
                     <a href="{{ route('category') }}" class="nav-link">
@@ -171,8 +163,18 @@
                       <p>Testimoni</p>
                     </a>
                   </li>
+                  <li class="nav-item">
+                    <a href="{{ route('transaksi') }}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Transaction</p>
+                      @if ($unread > 0)
+                      <span class="badge bg-danger b ml-2">{{ $unread }}</span>
+                      @endif
+                    </a>
+                  </li>
                 
                 </ul>
+           
               </li>
              
              
@@ -190,16 +192,12 @@
       <!--end::App Main-->
       <!--begin::Footer-->
       <footer class="app-footer">
-        <!--begin::To the end-->
-        <div class="float-end d-none d-sm-inline">Anything you want</div>
-        <!--end::To the end-->
-        <!--begin::Copyright-->
+    
         <strong>
-          Copyright &copy; 2014-2024&nbsp;
-          <a href="https://adminlte.io" class="text-decoration-none">AdminLTE.io</a>.
+          Hak Cipta © 2025 <span><a href="https://www.indoapps.id/">PT Indoapps Solusindo</a></span>
         </strong>
-        All rights reserved.
-        <!--end::Copyright-->
+
+
       </footer>
       <!--end::Footer-->
     </div>
@@ -481,6 +479,26 @@
           });
       });
   </script>
+ 
+ 
+ <script>
+    $(document).ready(function() {
+        $('#summernote1').summernote({
+            height: 300,
+            placeholder: ' ',
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['codeview', 'help']]
+            ]
+        });
+    });
+</script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>

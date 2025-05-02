@@ -3,19 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Payment;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
-    public function category(){
-        $category = Category::orderBy('created_at','desc')->paginate(10);
-        return view('backend.category.index',compact('category'));
+    public function category(Request $request){
+        $search = $request->search;
+        $category = Category::orderBy('created_at','desc')
+                            ->where('name','like','%' . $search . '%')                    
+                            ->paginate(10);
+           $unread = Payment::where('is_read', false)
+                     ->where('status', 'success')
+                     ->count();
+        return view('backend.category.index',compact('category','unread'));
     }
 
     public function tambah(){
-        return view('backend.category.tambah');
+           $unread = Payment::where('is_read', false)
+                     ->where('status', 'success')
+                     ->count();
+        return view('backend.category.tambah',compact('unread'));
     }
 
     public function insert(Request $request){
@@ -38,7 +48,10 @@ class CategoryController extends Controller
 
     public function edit($id){
         $category = Category::findOrFail($id);
-        return view('backend.category.edit',compact('category'));
+           $unread = Payment::where('is_read', false)
+                     ->where('status', 'success')
+                     ->count();
+        return view('backend.category.edit',compact('category','unread'));
     }
 
     public function update(Request $request,$id){

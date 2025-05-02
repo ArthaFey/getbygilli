@@ -60,7 +60,7 @@
 <div class="" style="background-color: white;">
     <div class="container mt-4 mb-4">
         <div class="form-card">
-            <h4 class="form-title">Tambahkan ulasan</h4>
+            <h4 class="form-title">Edit Data</h4>
             
             <form action="/updateulasan/{{ $data->id }}" method="post" enctype="multipart/form-data">
                 @csrf

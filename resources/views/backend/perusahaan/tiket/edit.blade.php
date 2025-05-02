@@ -96,6 +96,31 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">From</label>
+                            <input type="text" class="form-control" name="from" value="{{ old('from',$tiket->from) }}" id="from">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">To</label>
+                            <input type="text" class="form-control" name="to" value="{{ old('to',$tiket->to) }}" id="to">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">Class</label>
+                            <input type="text" class="form-control" name="class" value="{{ old('class',$tiket->class) }}" id="class">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">Hotline</label>
+                            <input type="text" class="form-control" name="hotline" value="{{ old('hotline',$tiket->hotline) }}" id="hotline">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">Link Gmaps</label>
+                            <input type="text" class="form-control" name="gmaps" value="{{ old('gmaps',$tiket->gmaps) }}" id="gmaps">
+                        </div>
+
+                        <div class="mb-3">
                             <label for="title" class="col-sm-2 col-form-label">Tanggal Keberangkatan</label>
                             <input type="date" class="form-control" name="tanggal_keberangkatan" value="{{ old('tanggal_keberangkatan',$tiket->tanggal_keberangkatan) }}" id="">
                         </div>
@@ -112,8 +137,13 @@
 
 
                         <div class="mb-3">
-                            <label for="title" class="col-sm-2 col-form-label">Keterangan Tiba</label>
+                            <label for="title" class="col-sm-2 col-form-label">Deskripsi Tiket</label>
                             <textarea name="keterangan_tiba" id="summernote">{{ old('keterangan_tiba',$tiket->keterangan_tiba) }}</textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="title" class="col-sm-2 col-form-label">Note</label>
+                            <textarea name="note" id="summernote1">{{ old('note',$tiket->note) }}</textarea>
                         </div>
                       
                         <div class="mb-3">
@@ -125,15 +155,21 @@
                             @endforeach
                           </select>
                         </div>
-                    
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" name="status" {{ old('status', $tiket->status ? 'checked' : '') }}>
+                            <label class="form-check-label" for="switchCheckChecked">Aktifkan Tiket</label>
+                        </div>
+
                         <button type="submit" class="btn btn-success">Save</button>
                     </form>
                 </div>
             </div>
         </div>
-        <!-- /.row -->
-    </div><!-- /.container-fluid -->
+    </div>
 </div>
+
+    
 
 
 <script>

@@ -35,8 +35,9 @@ Carbon::setLocale('id');
   <nav class="navbar navbar-light bg-light">
     <div class="container-fluid d-flex justify-content-between align-items-center">
     <a href="{{ route('tiket.tambah',$perusahaan->id) }}" class="btn btn-success">Tambah</a>
-    <form class="form-inline d-flex gap-2">
-      <input class="form-control " type="search" placeholder="Search" aria-label="Search">
+    <form action="{{ route('tiket.show',$perusahaan->id) }}" method="get" class="form-inline d-flex gap-2">
+      @csrf
+      <input class="form-control " type="search" name="search" value="{{ request('search') }}" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
 </div>
@@ -53,6 +54,7 @@ Carbon::setLocale('id');
         <th class="text-center">Harga Dewasa</th>
         <th class="text-center">Harga Anak-anak</th>
         <th class="text-center">Category</th>
+        <th class="text-center">Status</th>
         <th class="text-center">Action</th>
       </tr>
     </thead>
@@ -68,9 +70,17 @@ Carbon::setLocale('id');
         </td>
         <td class="text-center">{{ $item->judul_tiket }}</td>
         <td class="text-center">{{ Carbon::parse($item->tanggal_keberangkatan)->isoFormat('D MMM Y') }}</td>
-        <td class="text-center">{{ $item->harga_dewasa }}</td>
-        <td class="text-center">{{ $item->harga_anak_anak }}</td>
+        <td class="text-center">IDR {{ number_format($item->harga_dewasa,0,) }}</td>
+        <td class="text-center">IDR {{ number_format($item->harga_anak_anak,0,) }}</td>
         <td class="text-center">{{ $item->category->name }}</td>
+        <td class="text-center">
+          @if ($item->status == 1)
+              <p class="bg-success text-white" style="border-radius: 10px;">Aktif</p>
+              @else
+              <p class="bg-danger text-white" style="border-radius: 10px;">Nonaktif</p>
+
+          @endif
+        </td>
         
         <td class="text-center">
           <div class="btn-group">

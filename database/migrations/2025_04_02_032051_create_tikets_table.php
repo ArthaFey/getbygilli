@@ -17,11 +17,18 @@ return new class extends Migration
             $table->string('category_id');
             $table->string('foto');
             $table->string('judul_tiket');
+            $table->string('from');
+            $table->string('to');
+            $table->string('class');
+            $table->string('hotline');
+            $table->string('gmaps');
             $table->date('tanggal_keberangkatan');
             $table->string('slug')->unique();
             $table->integer('harga_dewasa');
             $table->integer('harga_anak_anak');
             $table->text('keterangan_tiba');
+            $table->text('note');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

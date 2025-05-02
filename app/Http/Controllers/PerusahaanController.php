@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\DeskripsiTiket;
 use App\Models\FotoTransportasi;
+use App\Models\Payment;
 use App\Models\Perusahaan;
 use App\Models\Tiket;
 use Cviebrock\EloquentSluggable\Services\SlugService;
@@ -15,12 +16,21 @@ class PerusahaanController extends Controller
 {
 
     // ## PERUSAHAAN ## //
-    public function perusahaan(){
-        $perusahaan =  Perusahaan::orderBy('created_at','desc')->paginate(10);
-        return view('backend.perusahaan.index',compact('perusahaan'));
+    public function perusahaan(Request $request){
+        $search = $request->search;
+        $perusahaan = Perusahaan::orderBy('created_at','desc')
+                                ->where('nama', 'like', '%' . $search . '%')
+                                ->paginate(10);
+            $unread = Payment::where('is_read', false)
+                     ->where('status', 'success')
+                     ->count();
+        return view('backend.perusahaan.index',compact('perusahaan','unread'));
     }
     public function tambah(){
-        return view('backend.perusahaan.tambah');
+           $unread = Payment::where('is_read', false)
+                     ->where('status', 'success')
+                     ->count();
+        return view('backend.perusahaan.tambah',compact('unread'));
     }
 
     public function insert(Request $request){
@@ -44,7 +54,10 @@ class PerusahaanController extends Controller
 
     public function edit($id){
         $perusahaan = Perusahaan::findOrFail($id);
-        return view('backend.perusahaan.edit',compact('perusahaan'));
+            $unread = Payment::where('is_read', false)
+                     ->where('status', 'success')
+                     ->count();
+        return view('backend.perusahaan.edit',compact('perusahaan','unread'));
     }
 
     public function update(Request $request,$id){
@@ -83,16 +96,24 @@ class PerusahaanController extends Controller
 
 
     // ## TIKET ## //
-    public function showTiket($id){
+    public function showTiket(Request $request,$id){
+        $search = $request->search;
         $perusahaan = Perusahaan::findOrFail($id);
-        $tiket = $perusahaan->tiket()->orderBy('created_at','desc')->paginate(10);
-        return view('backend.perusahaan.tiket.index',compact('perusahaan','tiket'));
+        $tiket = $perusahaan->tiket()->orderBy('created_at','desc')
+        ->where('judul_tiket','like','%' . $search . '%')                            
+        ->paginate(10);
+    $unread = Payment::where('is_read', false)
+                     ->where('status', 'success')
+                     ->count();        return view('backend.perusahaan.tiket.index',compact('perusahaan','tiket','unread'));
     }
 
     public function tambahTiket($id){
         $perusahaan = Perusahaan::findOrFail($id);
         $category = Category::orderByDesc('created_at')->get();
-        return view('backend.perusahaan.tiket.tambah',compact('perusahaan','category'));
+           $unread = Payment::where('is_read', false)
+                     ->where('status', 'success')
+                     ->count();
+        return view('backend.perusahaan.tiket.tambah',compact('perusahaan','category','unread'));
     }
 
     public function insertTiket(Request $request,$id){
@@ -101,7 +122,7 @@ class PerusahaanController extends Controller
         if($request->hasFile('foto')){
             $fileName = $request->file('foto')->getClientOriginalName();
             $request->file('foto')->move('foto/', $fileName);
-            $tiket->logo = $fileName;
+            $tiket->foto = $fileName;
             $tiket->save();
         }
 
@@ -111,12 +132,20 @@ class PerusahaanController extends Controller
     public function editTiket($id){
         $tiket = Tiket::findOrFail($id);
         $category = Category::orderByDesc('created_at')->get();
-        return view('backend.perusahaan.tiket.edit',compact('tiket','category'));
+            $unread = Payment::where('is_read', false)
+                     ->where('status', 'success')
+                     ->count();
+        return view('backend.perusahaan.tiket.edit',compact('tiket','category','unread'));
     }
 
-    public function updateTiket(Request $request,$id){
+    public function updateTiket(Request $request, $id){
         $tiket = Tiket::findOrFail($id);
         $data = $request->all();
+    
+        // Memproses status switch (checkbox)
+        $data['status'] = $request->has('status'); // Jika switch dicentang, status akan menjadi true, jika tidak false
+    
+        // Mengecek dan mengupload foto baru jika ada
         if ($request->hasFile('foto')) {
             // Hapus file lama jika ada
             if ($tiket->foto) {
@@ -132,10 +161,13 @@ class PerusahaanController extends Controller
             $file->move('foto/', $filename); // Memindahkan file ke folder yang benar
             $data['foto'] = $filename; // Menyimpan nama file baru ke dalam data
         }
-
+    
+        // Update data tiket dengan data baru
         $tiket->update($data);
-        return redirect()->route('tiket.show',$tiket->perusahaan->id)->with('update','Update Data Success');
+    
+        return redirect()->route('tiket.show', $tiket->perusahaan->id)->with('update', 'Update Data Success');
     }
+    
 
     public function deleteTiket(Request $request,$id){
         $tiket = Tiket::findOrFail($id);
@@ -160,15 +192,22 @@ class PerusahaanController extends Controller
     }
 
     // ## FOTO TANSPORTASI ## //
-    public function showfoto($id){
+    public function showfoto(Request $request,$id){
         $tiket = Tiket::findOrFail($id);
-        $fotoTransportasi = $tiket->fototransportasi()->orderByDesc('created_at')->paginate(10);
-        return view('backend.perusahaan.tiket.foto-transportasi.index',compact('tiket','fotoTransportasi'));
+        $fotoTransportasi = $tiket->fototransportasi()->orderByDesc('created_at')
+        ->paginate(10);
+            $unread = Payment::where('is_read', false)
+                     ->where('status', 'success')
+                     ->count();
+        return view('backend.perusahaan.tiket.foto-transportasi.index',compact('tiket','fotoTransportasi','unread'));
     }
 
     public function tambahfoto($id){
         $tiket = Tiket::findOrFail($id);
-        return view('backend.perusahaan.tiket.foto-transportasi.tambah',compact('tiket'));
+            $unread = Payment::where('is_read', false)
+                     ->where('status', 'success')
+                     ->count();
+        return view('backend.perusahaan.tiket.foto-transportasi.tambah',compact('tiket','unread'));
     }
 
     public function insertfoto(Request $request,$id){
@@ -184,8 +223,11 @@ class PerusahaanController extends Controller
     }
 
     public function editfoto($id){
+            $unread = Payment::where('is_read', false)
+                     ->where('status', 'success')
+                     ->count();
         $fotoTransportasi = FotoTransportasi::findOrFail($id);
-        return view('backend.perusahaan.tiket.foto-transportasi.edit',compact('fotoTransportasi'));
+        return view('backend.perusahaan.tiket.foto-transportasi.edit',compact('fotoTransportasi','unread'));
     }
 
     public function updatefoto(Request $request,$id){
@@ -219,13 +261,19 @@ class PerusahaanController extends Controller
     // ## DESKRIPSI TIKET ## //
     public function showdeskripsi($id){
         $tiket = Tiket::findOrFail($id);
+           $unread = Payment::where('is_read', false)
+                     ->where('status', 'success')
+                     ->count();
         $deskripsi = $tiket->deskripsitiket()->orderByDesc('created_at')->paginate(10);
-        return view('backend.perusahaan.tiket.deskripsi-perjalanan.index',compact('tiket','deskripsi'));
+        return view('backend.perusahaan.tiket.deskripsi-perjalanan.index',compact('tiket','deskripsi','unread'));
     }
 
     public function tambahdeskripsi($id){
+            $unread = Payment::where('is_read', false)
+                     ->where('status', 'success')
+                     ->count();
         $tiket =  Tiket::findOrFail($id);
-        return view('backend.perusahaan.tiket.deskripsi-perjalanan.tambah',compact('tiket'));
+        return view('backend.perusahaan.tiket.deskripsi-perjalanan.tambah',compact('tiket','unread'));
     }
 
     public function insertdeskripsi(Request $request,$id){
@@ -243,8 +291,11 @@ class PerusahaanController extends Controller
     }
 
     public function editdeskripsi($id){
+           $unread = Payment::where('is_read', false)
+                     ->where('status', 'success')
+                     ->count();
         $deskripsi = DeskripsiTiket::findOrFail($id);
-        return view('backend.perusahaan.tiket.deskripsi-perjalanan.edit',compact('deskripsi'));
+        return view('backend.perusahaan.tiket.deskripsi-perjalanan.edit',compact('deskripsi','unread'));
     }
 
     public function updatedeskripsi(Request $request,$id){

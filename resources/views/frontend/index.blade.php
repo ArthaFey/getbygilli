@@ -12,11 +12,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../css/home.css">
+
 <style>
     .rotate-90 {
     transform: rotate(90deg); /* Rotasi 90 derajat untuk membuat ikon vertikal */
 }
-
 </style>
 
 @php
@@ -36,21 +36,22 @@
             </div>
             <div class="w-full mb-3">
                 <h1 class="text-2xl font-bold text-white">
-                    Explore Indonesia with Boat Giliwonders – Sail Beyond Limits!
+                    Explore Indonesia with Boat Giliwanders – Sail Beyond Limits!
                 </h1>
             </div>
             <!-- Form Pencarian -->
             <div id="searchForm">
-                <form action="" method="GET" class="flex flex-wrap md:flex-nowrap items-center gap-3 w-full">
+                <form action="{{ route('search.tiket') }}" method="GET" class="flex flex-wrap md:flex-nowrap items-center gap-3 w-full">
+                    @csrf
                     <div class="flex items-center border rounded-lg px-3 py-2 bg-white w-full md:w-1/3 h-12 relative">
                         <!-- Input Departure & Destination -->
-                        <input type="text" class="border-none focus:ring-0 text-center text-sm flex-grow bg-transparent h-full w-full max-w-xs text-center" placeholder="Enter Departure">
+                        <input type="text" name="departure" class="border-none focus:ring-0 text-center text-sm flex-grow bg-transparent h-full w-full max-w-xs text-center" placeholder="Enter Departure">
                        
                         <button type="button" id="swapBtn" class="flex-shrink-0 px-2">
                             <i class="fas fa-right-left text-lg text-gray-600"></i>
                         </button>
                         <!-- Dropdown Destination -->
-                        <input type="text" class="border-none focus:ring-0 text-center text-sm flex-grow bg-transparent h-full w-full max-w-xs text-center" placeholder="Enter Destination">
+                        <input type="text" name="destination" class="border-none focus:ring-0 text-center text-sm flex-grow bg-transparent h-full w-full max-w-xs text-center" placeholder="Enter Destination">
                     
                     </div>
                     <!-- Input Tanggal Berangkat -->
@@ -61,7 +62,7 @@
                     <!-- Input Penumpang -->
                     <div class="flex items-center border rounded-lg px-4 py-3 bg-white w-full md:w-1/6 h-12">
                         <div class="dropdown w-full">
-                            <select class="w-full border-none border-gray-300 rounded-lg text-sm text-center">
+                            <select class="w-full border-none border-gray-300 rounded-lg text-sm text-center" name="passenger">
                                 <option value="" disabled selected hidden>1 Passenger</option>
                                 <option value="1">1 Passenger</option>
                                 <option value="2">2 Passengers</option>
@@ -88,7 +89,7 @@
     <div class="lg:hidden relative min-h-[400px]">
         <!-- Full Background Image -->
         <div class="absolute inset-0 z-0">
-            <img src="assets/Background Header.jpg" alt="Mobile Background" class="w-full h-full object-cover">
+            <img src="../assets/Background Header.jpg" alt="Mobile Background" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-black bg-opacity-50"></div>
         </div>
         
@@ -98,7 +99,7 @@
             <div class="text-center mb-6">
                 <h1 class="text-2xl font-bold text-white leading-snug">
                     Explore Indonesia with Boat<br>
-                    Giliwonders - Sail Beyond<br>
+                    Giliwanders - Sail Beyond<br>
                     Limits!
                 </h1>
             </div>
@@ -106,9 +107,11 @@
             <!-- Search Form -->
             <d class="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl p-4 shadow-lg">
                 <!-- Departure & Destination -->
+                <form action="{{ route('search.tiket') }}" method="get">
+                    @csrf
                 <div class="flex flex-col items-center mb-3 gap-3">
                     <!-- Departure Select -->
-                    <input type="text" class="border focus:ring-0 text-center text-sm flex-grow bg-transparent h-full w-full max-w-xs text-center p-3 rounded-lg" placeholder="Enter Departure">
+                    <input type="text" name="departure" class="border focus:ring-0 text-center text-sm flex-grow bg-transparent h-full w-full max-w-xs text-center p-3 rounded-lg" placeholder="Enter Departure">
                     
                     <!-- Vertical Swap Button with arrows side by side -->
                     <button type="button" id="swapBtn" class="flex-shrink-0 px-2">
@@ -116,7 +119,7 @@
                     </button>
                     
                     <!-- Destination Select -->
-                    <input type="text" class="border focus:ring-0 text-center text-sm flex-grow bg-transparent h-full w-full max-w-xs text-center p-3 rounded-lg" placeholder="Enter Destination">
+                    <input type="text" name="destination" class="border focus:ring-0 text-center text-sm flex-grow bg-transparent h-full w-full max-w-xs text-center p-3 rounded-lg" placeholder="Enter Destination">
                 </div>
                 
                 <!-- Dates -->
@@ -126,7 +129,7 @@
                         <i class="fas fa-calendar-alt text-gray-500 mr-2"></i>
                         <input type="date" 
                                placeholder="dd/mm/yyyy" 
-                               class="w-full border-none focus:ring-0 text-sm bg-transparent">
+                               class="w-full border-none focus:ring-0 text-sm bg-transparent" name="date">
                     </div>
                     
                 
@@ -134,7 +137,7 @@
                 
                 <!-- Passenger -->
                 <div class="flex mb-4">
-                    <select class="w-full p-3 border border-gray-300 rounded-lg text-sm text-center focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                    <select  name="passenger" class="w-full p-3 border border-gray-300 rounded-lg text-sm text-center focus:ring-2 focus:ring-red-500 focus:border-transparent">
                         <option value="" disabled selected hidden>1 Passenger</option>
                         <option value="1">1 Passenger</option>
                         <option value="2">2 Passengers</option>
@@ -148,9 +151,10 @@
                 </div>
                 
                 <!-- Find Ticket Button -->
-                <a href="book info.html" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg text-sm min-w-[120px] h-12 flex items-center justify-center transition duration-200">
+                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg text-sm min-w-[120px] h-12 flex items-center justify-center transition duration-200">
                     Find Ticket
-                </a>
+                </button>
+            </form>
             </div>
         </div>
     </div>
@@ -195,7 +199,7 @@
             <h2 class="text-3xl font-bold">Explore Beautiful Destinations</h2>
             <div class="flex items-center mt-4 md:mt-0 space-x-4">
             
-                <a href="#" id="viewAllBtn" class="text-sm font-medium text-red-600 hover:text-red-700 flex items-center animate__animated animate__fadeIn">
+                <a href="{{ route('all.tiket') }}" id="viewAllBtn" class="text-sm font-medium text-red-600 hover:text-red-700 flex items-center animate__animated animate__fadeIn">
                     View All
                     <svg id="arrowIcon" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -207,6 +211,7 @@
         <div id="destinationsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
     
             @foreach($tiket as $item)
+            <a href="{{ route('booking.tiket',$item->slug) }}">
             <div class="destination-card bg-white shadow-md rounded-lg overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 animate__animated animate__fadeInUp" data-island="bali" data-popular="true">
                 <img alt="Image of Bali & Nusa Penida" class="w-full h-48 object-cover aspect-video" src="{{ asset('foto/' . $item->foto) }}" />
                 <div class="p-4">
@@ -220,6 +225,7 @@
                     </div>                    
                 </div>
             </div>
+        </a>
             @endforeach
         
             
@@ -276,51 +282,87 @@
 
 
 <!-- Reviews Start -->
-<section class="reviews py-12">
-    <div class="container">
-      <div class="text-center mb-12 animate__animated animate__fadeIn">
-        <span class="section__subtitle block text-center text-red-600 animate__animated animate__fadeIn">Our Reviews</span>
-        <h2 class="section__title text-3xl font-bold text-center mt-2 animate__animated animate__fadeIn">Unforgettable Experiences, Just for You</h2>
-      </div>
-  
-      <div class="row g-4">
-
-        @foreach ($review as $item )
-        <div class="col-md-4 animate__animated animate__fadeInUp animate__delay-1s">
-          <div class="review-card bg-white rounded-lg shadow-lg p-6 h-100 transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-xl hover:border-t-4 hover:border-red-500">
-            <p class="text-gray-700 mb-4">
-              "Perjalanan dengan Giliwanders sangat menyenangkan dan aman."
-            </p>
-            <div class="d-flex align-items-center mb-4">
-              <img alt="Portrait of John Doe" class="rounded-full me-3" width="50" height="50" src="https://storage.googleapis.com/a1aa/image/etfk38kfRY401Y9jJ--HtxnUsjs_08fJL5iXZoLG4zI.jpg">
-              <div>
-                <p class="text-gray-800 fw-semibold mb-0">John Doe</p>
-                <p class="text-gray-500 mb-0">Tour Guide</p>
-              </div>
-            </div>
-            <div class="d-flex align-items-center mb-4">
-              <div class="text-warning me-2">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-              </div>
-              <p class="text-gray-600 mb-0">4.5</p>
-            </div>
-            <p class="text-gray-500 text-sm mb-0">
-              Diunggah pada 12 Januari 2023
-            </p>
-          </div>
+<section class="reviews py-12 bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 animate__animated animate__fadeIn">
+            <span class="section__subtitle block text-center text-red-600 text-sm font-semibold tracking-widest mb-2">Our Blog & News</span>
+            <h2 class="section__title text-3xl sm:text-4xl font-bold text-center mt-2">The Best Trip For You</h2>
         </div>
-        @endforeach
 
+        <div class="swiper reviewSwiper w-full mx-auto">
+            <div class="swiper-wrapper">
+                <!-- Loop through the reviews and create individual slides for each review -->
+                @foreach ($review as $item)
+                <div class="swiper-slide flex justify-center">
+                    <!-- Review Card -->
+                    <div class="review-card bg-white rounded-lg shadow-md p-6 sm:p-8 m-2 w-full max-w-md">
+                        <div class="mb-4 sm:mb-6">
+                            <p class="text-gray-700 italic text-base sm:text-lg mb-4 sm:mb-6">"{{ strip_tags($item->ulasan) }}"</p>
+                            <div class="flex items-center">
+                                <img alt="Portrait of {{ $item->name }}" class="rounded-full mr-4 object-cover" width="80" height="80" src="{{ asset('fotoprofile/' . $item->foto) }}">
+                                <div>
+                                    <p class="text-gray-800 font-bold mb-1">{{ $item->nama }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between border-t pt-4">
+                            <div class="text-yellow-400">
+                                @for ($i = 0; $i < $item->rate; $i++)
+                                    <i class="fas fa-star"></i>
+                                @endfor
+                                <span class="text-gray-600 text-sm ml-2">{{ $item->rate }}.0</span>
+                            </div>
+                            <p class="text-gray-500 text-sm">Diunggah pada {{ \Carbon\Carbon::parse($item->created_at)->isoFormat('D MMM Y') }}</p>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
 
-      </div>
+            <!-- Pagination -->
+            <div class="swiper-pagination mt-8"></div>
+        </div>
     </div>
-  </section>
-<!-- Reviews Start -->
+</section>
 
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<!-- Swiper Init -->
+<script>
+    const swiper = new Swiper('.reviewSwiper', {
+        loop: true,
+        spaceBetween: 16,
+        autoplay: {
+            delay: 4000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        breakpoints: {
+            0: {
+                slidesPerView: 1,
+            },
+            640: {
+                slidesPerView: 1,
+            },
+            768: {
+                slidesPerView: 2,
+            },
+            1024: {
+                slidesPerView: 3,
+            },
+        }
+    });
+</script>
+
+
+<!-- Reviews Start -->
 
     <!-- Footer -->
     <footer class="bg-red-800 text-white py-12 mt-6 animate__animated animate__fadeInUp animate__delay-1.9s">
@@ -332,27 +374,11 @@
                 </a>
                 <div class="mt-4 space-y-2">
                     <p><i class="fa fa-phone me-2"></i> +62 8122840166</p>
-                    <p><i class="fa fa-envelope me-2"></i> cs@giliwonders.com.id</p>
-                    <p><i class="fa fa-globe me-2"></i> www.giliwonders.com</p>
+                    <p><i class="fa fa-envelope me-2"></i> boatgiliwanders@gmail.com</p>
+                    <p><i class="fa fa-globe me-2"></i> www.giliwanders.com</p>
                 </div>
             </div>
 
-            <!-- Sitemap -->
-            <div>
-                <h3 class="footer__title text-xl font-bold">Sitemap</h3>
-                <ul class="footer__links mt-3 space-y-1">
-                    <li><a href="home.html" class="footer__link hover:underline">Home</a></li>
-                </ul>
-                <ul class="footer__links mt-3 space-y-1">
-                    <li><a href="about.html" class="footer__link hover:underline">About Us</a></li>
-                </ul>
-                <ul class="footer__links mt-3 space-y-1">
-                    <li><a href="blog-gw.html" class="footer__link hover:underline">Blog & News</a></li>
-                </ul>
-                <ul class="footer__links mt-3 space-y-1">
-                    <li><a href="contact.html" class="footer__link hover:underline">Contact</a></li>
-                </ul>
-            </div>
 
             <div>
                 <h3 class="text-xl font-bold">Address</h3>
@@ -382,9 +408,37 @@
             </div>
         </div>
     </footer>
+
+  
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../js/home.js">
+    <script src="../js/home.js"></script>
+    
+
+    <script src="
+    https://cdn.jsdelivr.net/npm/sweetalert2@11.19.1/dist/sweetalert2.all.min.js
+    "></script>
+    <link href="
+    https://cdn.jsdelivr.net/npm/sweetalert2@11.19.1/dist/sweetalert2.min.css
+    " rel="stylesheet">
+    @if(session('success')) 
+    <script>
+        Swal.fire({
+            title: "{{ session('success') }}",
+            icon: "success",
+            draggable: true,
+            customClass: {
+                popup: 'bg-white text-gray-900 rounded-lg shadow-lg border border-gray-300',
+                title: 'text-2xl font-semibold mb-4',
+                icon: 'text-green-500',
+                content: 'text-sm text-gray-700',
+                confirmButton: 'bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400',
+            }
+        });
     </script>
+    @endif
+    
+
+
+
 </body>
 </html>

@@ -3,20 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\Berita;
+use App\Models\Payment;
 use HTMLPurifier;
 use HTMLPurifier_Config;
 use Illuminate\Http\Request;
 
 class BeritaController extends Controller
 {
-    public function news(){
-        $data = Berita::orderByDesc('created_at')->paginate(10);
-        return view('backend.berita.databerita', compact('data'));
+    public function news(Request $request){
+          $unread = Payment::where('is_read', false)
+                     ->where('status', 'success')
+                     ->count();
+        $search = $request->search;
+        $data = Berita::orderByDesc('created_at')
+                        ->where('title','like' , '%' . $search . '%')
+                        ->paginate(10);
+        return view('backend.berita.databerita', compact('data','unread'));
     }
 
     public function tambahdata(){
-
-        return view('backend.berita.uploaddata');
+         $unread = Payment::where('is_read', false)
+                     ->where('status', 'success')
+                     ->count();
+        return view('backend.berita.uploaddata',compact('unread'));
     }
     public function insertdata(Request $request){
     
@@ -36,7 +45,7 @@ class BeritaController extends Controller
         if ($request->hasFile('image')) {
             // Pastikan folder tujuan sudah ada (gunakan public_path untuk keamanan)
             $imageName = $request->file('image')->getClientOriginalName();
-            $request->file('image')->move(public_path('fotoberita'), $imageName);
+            $request->file('image')->move('fotoberita/', $imageName);
     
             // Simpan nama gambar ke database
             $data->image = $imageName;
@@ -47,10 +56,11 @@ class BeritaController extends Controller
         return redirect()->route('news')->with('insert', 'Add Data Success');
     }
     public function tampilkandata($id){
-
+    $unread = Payment::where('is_read', false)
+                     ->where('status', 'success')
+                     ->count();
         $data = Berita::find($id);
-        return view('backend.berita.editberita', compact('data'));
-
+        return view('backend.berita.editberita', compact('data','unread'));
     }
     public function updatedata(Request $request, $id){
         // Ambil data berita yang ingin diperbarui
@@ -85,7 +95,7 @@ class BeritaController extends Controller
     
             // Simpan gambar baru
             $imageName = $request->file('image')->getClientOriginalName();
-            $request->file('image')->move(public_path('fotoberita'), $imageName);
+            $request->file('image')->move('fotoberita/', $imageName);
     
             // Update nama gambar di database
             $data->image = $imageName;
