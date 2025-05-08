@@ -8,6 +8,8 @@ use App\Http\Controllers\LoginRegisterController;
 use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\TestimoniController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\OperatorController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -118,5 +120,7 @@ Route::get('/transaction/{id}',[TransactionController::class,'transaksiShow'])->
 Route::get('/payment/{id}/mark-as-read', [TransactionController::class, 'markAsRead'])->name('payment.markAsRead');
 });
 
-
-
+// ## SPEED BOAT OPERATOR ## //
+Route::get('/operator',[OperatorController::class, 'operator'])->name('operator');
+Route::get('/tambahopt',[OperatorController::class, 'tambahopt'])->name('tambahopt');
+Route::post('/insertopt',[OperatorController::class, 'insertopt'])->name('insertopt');

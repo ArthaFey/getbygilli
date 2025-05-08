@@ -172,6 +172,15 @@
                       @endif
                     </a>
                   </li>
+                  <li class="nav-item">
+                    <a href="{{ route('operator') }}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Operator</p>
+                      @if ($unread > 0)
+                      <span class="badge bg-danger b ml-2">{{ $unread }}</span>
+                      @endif
+                    </a>
+                  </li>
                 
                 </ul>
            
