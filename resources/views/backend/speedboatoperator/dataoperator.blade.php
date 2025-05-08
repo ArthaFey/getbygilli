@@ -60,8 +60,8 @@
                         <td>{{ $row->quantity }}</td>
                         <td>{{ $row->rating }}</td>
                         <td>
-                            <a href="#" type="button" class="btn btn-info">Edit</a>
-                            <a href="#" class="btn btn-danger btn-sm delete" data-id="{{ $row->id }}" data-title="{{ $row->title }}">Delete</a>
+                            <a href="/tampilkanopt/{{ $row->id }}" type="button" class="btn btn-info">Edit</a>
+                            <a href="#" onclick="comfirmDelete('/deleteopt/{{ $row->id }}')" onclick="return confirm('Apakah Anda Yakin menghapus data Ini')"  class="btn btn-danger delete">Delete</a>
                         </td>
                     </tr>
                     @endforeach

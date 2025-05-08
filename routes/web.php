@@ -124,3 +124,7 @@ Route::get('/payment/{id}/mark-as-read', [TransactionController::class, 'markAsR
 Route::get('/operator',[OperatorController::class, 'operator'])->name('operator');
 Route::get('/tambahopt',[OperatorController::class, 'tambahopt'])->name('tambahopt');
 Route::post('/insertopt',[OperatorController::class, 'insertopt'])->name('insertopt');
+Route::get('/tampilkanopt/{id}',[OperatorController::class, 'tampilkanopt'])->name('tampilkanopt');
+Route::post('/updateopt/{id}',[OperatorController::class, 'updateopt'])->name('updateopt');
+Route::get('/deleteopt/{id}',[OperatorController::class, 'deleteopt'])->name('deleteopt');
+

@@ -16,8 +16,8 @@ class OperatorSeeder extends Seeder
         DB::table('operators')->insert([
             'title'=>'Pemandangan Bagus Di Pantai Kuta Bali',
             'quantity'=>'2',
-            'knocks'=>'pemandangan yang sangat abgus terpampang nyata di pantai kuta bali yang sangat indah',
-            'rating'=>'pemandangan yang sangat abgus terpampang nyata di pantai kuta bali yang sangat indah',
+            'knocks'=>'3',
+            'rating'=>'5',
             'content'=>'gftfguhgfrsdt',
             'map1'=>'gvvbk',
             'map2'=>'34ghvu5',

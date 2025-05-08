@@ -105,9 +105,9 @@
 
 <div class="container">
     <div class="form-container">
-        <h4 class="form-title">Add Operator</h4>
+        <h4 class="form-title">Edit Operator</h4>
         
-        <form action="/insertopt" method="post" enctype="multipart/form-data">
+        <form action="/updateopt/{{ $data->id }}" method="post" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-4">
