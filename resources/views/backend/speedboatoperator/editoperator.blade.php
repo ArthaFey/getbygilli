@@ -113,47 +113,46 @@
             <div class="mb-4">
                 <label for="image" class="form-label">Gambar</label>
                 <input type="file" id="gambar" name="gambar" class="form-control">
-                <div class="image-preview mt-2" id="thumbnailInput">
-                    <img src="#" alt="Image Preview" id="previewImage" style="display: none;">
-                    <span class="preview-text" id="previewText">No image selected</span>
+                <div class="image-preview" id="thumbnailInput">
+                    <img src="{{ asset('fotooperator/' . $data->gambar) }}" alt="Image Preview" id="previewImage" style="display: block;">
                 </div>
             </div>
 
             <div class="mb-4">
                 <label for="title" class="form-label">Title</label>
-                <input type="text" name="title" class="form-control" value="{{ old('title') }}" required>
+                <input type="text" name="title" class="form-control" value="{{ old('title',$data->title) }}" required>
             </div>
 
             <div class="row mb-4">
                 <div class="col-md-4 mb-3">
                     <label for="quantity" class="form-label">Quantity</label>
-                    <input type="number" name="quantity" class="form-control" value="{{ old('quantity') }}" required>
+                    <input type="number" name="quantity" class="form-control" value="{{ old('quantity',$data->quantity) }}" required>
                 </div>
                 
                 <div class="col-md-4 mb-3">
                     <label for="knocks" class="form-label">Knocks</label>
-                    <input type="number" name="knocks" class="form-control" value="{{ old('knocks') }}" required>
+                    <input type="number" name="knocks" class="form-control" value="{{ old('knocks',$data->knocks) }}" required>
                 </div>
                 
                 <div class="col-md-4 mb-3">
                     <label for="rating" class="form-label">Rating</label>
-                    <input type="number" step="0.1" min="0" max="5" name="rating" class="form-control" value="{{ old('rating') }}" required>
+                    <input type="number" step="0.1" min="0" max="5" name="rating" class="form-control" value="{{ old('rating',$data->rating) }}" required>
                 </div>
             </div>
 
             <div class="mb-4">
                 <label for="content" class="form-label">Content</label>
-                <textarea class="form-control" name="content" id="summernote" required>{{ old('content') }}</textarea>
+                <textarea class="form-control" name="content" id="summernote" required>{{ old('content',$data->content) }}</textarea>
             </div>
 
             <div class="mb-4">
                 <label for="map_link_1" class="form-label">Link Map 1</label>
-                <input type="url" name="map1" class="form-control" value="{{ old('map1') }}" required>
+                <input type="url" name="map1" class="form-control" value="{{ old('map1',$data->map1) }}" required>
             </div>
 
             <div class="mb-4">
                 <label for="map_link_2" class="form-label">Link Map 2</label>
-                <input type="url" name="map2" class="form-control" value="{{ old('map2') }}" required>
+                <input type="url" name="map2" class="form-control" value="{{ old('map2',$data->map2) }}" required>
             </div>
             
             <div class="d-flex justify-content-end mt-4">

@@ -111,7 +111,7 @@
             @csrf
 
             <div class="mb-4">
-                <label for="image" class="form-label">Gambar</label>
+                <label for="gambar" class="form-label">Gambar</label>
                 <input type="file" id="gambar" name="gambar" class="form-control">
                 <div class="image-preview mt-2" id="thumbnailInput">
                     <img src="#" alt="Image Preview" id="previewImage" style="display: none;">

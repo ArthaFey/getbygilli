@@ -22,7 +22,7 @@ class OperatorController extends Controller
         $query->where('title', 'like', '%' . $request->search . '%');
     }
 
-    $data = $query->paginate(10);
+    $data = $query->paginate(5);
 
     return view('backend.speedboatoperator.dataoperator', compact('data','unread'));
 }
@@ -62,21 +62,35 @@ class OperatorController extends Controller
     $data->map1 = $request->input('map1');
     $data->map2 = $request->input('map2');
 
-    // Upload gambar
+    // Proses upload gambar jika ada
     if ($request->hasFile('gambar')) {
-        $path = $request->file('gambar')->store('public/fotooperator');
-        $data->gambar = basename($path);
-    } else {
-        return back()->with('error', 'File gambar tidak ditemukan');
+        // Pastikan folder tujuan sudah ada (gunakan public_path untuk keamanan)
+        $imageName = $request->file('gambar')->getClientOriginalName();
+        $request->file('gambar')->move(public_path('fotooperator'), $imageName);
+
+        // Simpan nama gambar ke database
+        $data->gambar = $imageName;
+    }
+    $data->save();  // Simpan data setelah nama gambar ditambahkan
+    
+    // Redirect ke halaman berita dengan pesan sukses
+    return redirect()->route('operator')->with('Success', 'Data berhasil ditambahkan!');
+}
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'title' => 'required',
+        'gambar' => 'image|mimes:jpeg,png,jpg|max:2048',
+        // validasi lainnya
+    ]);
+
+    if ($request->hasFile('gambar')) {
+        $path = $request->file('gambar')->store('fotooperator', 'public');
+        $validated['gambar'] = $path;
     }
 
-    // Simpan data
-    try {
-        $data->save();
-        return redirect()->route('operator')->with('success', 'Data tersimpan');
-    } catch (\Exception $e) {
-        return back()->with('error', 'Gagal menyimpan: ' . $e->getMessage());
-    }
+    Operator::create($validated);
+    // redirect dll
 }
 public function tampilkanopt($id){
     $unread = Payment::where('is_read', false)
@@ -112,24 +126,24 @@ public function tampilkanopt($id){
         ]);
     
         // Proses upload gambar jika ada
-        if ($request->hasFile('gambar')) {
-            // Hapus gambar lama (jika ada) sebelum menyimpan gambar baru
-            if ($data->gambar && file_exists(public_path('fotooperator/' . $data->gambar))) {
-                unlink(public_path('fotooperator/' . $data->gambar));
-            }
-    
-            // Simpan gambar baru
-            $imageName = $request->file('gambar')->getClientOriginalName();
-            $request->file('gambar')->move('fotooperator/', $imageName);
-    
-            // Update nama gambar di database
-            $data->gambar = $imageName;
-            $data->save();  // Jangan lupa simpan setelah gambar diperbarui
+    if ($request->hasFile('gambar')) {
+        // Hapus gambar lama (jika ada) sebelum menyimpan gambar baru
+        if ($data->gambar && file_exists(public_path('fotooperator/' . $data->gambar))) {
+            unlink(public_path('fotooperator/' . $data->gambar));
         }
-    
-        // Redirect setelah berhasil memperbarui
-        return redirect()->route('operator')->with('update', 'Update Data Success');
+
+        // Simpan gambar baru
+        $imageName = $request->file('gambar')->getClientOriginalName();
+        $request->file('gambar')->move(public_path('fotooperator'), $imageName);
+
+        // Update nama gambar di database
+        $data->gambar= $imageName;
+        $data->save();  // Jangan lupa simpan setelah gambar diperbarui
     }
+
+    // Redirect setelah berhasil memperbarui
+    return redirect()->route('operator')->with('update', 'Data Berhasil Diedit');
+}
     public function deleteopt($id){
 
         $data = Operator::find($id);
