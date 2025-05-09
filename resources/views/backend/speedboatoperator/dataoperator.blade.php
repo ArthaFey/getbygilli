@@ -23,15 +23,10 @@
         
           <div class="row g-3 align-items-center mt-2">
             <div class="col-auto">
-              <form action="/operator" method="GET">
-                <input 
-                  type="search" 
-                  id="inputPassword6" 
-                  name="search" 
-                  class="form-control" 
-                  placeholder="Telusuri" 
-                  aria-describedby="passwordHelpInline"
-                >
+              <form class="form-inline d-flex gap-2" action="{{ route('operator') }}" method="get">
+                @csrf
+                <input class="form-control " type="search" name="search" value="{{ request('search') }}" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
               </form>
             </div>
           </div>
